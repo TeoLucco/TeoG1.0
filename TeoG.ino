@@ -15,7 +15,7 @@
 #define WAIT_BT_CONN 60000
 unsigned long int firstSoundTime = 0;
 #define TIME_TO_SETUP 5000
-#define switchToIdleTime 15000
+//#define switchToIdleTime 15000
 
 // MULTITHREADING
 #define PING_INTERVAL 50 //71 con capacitivi // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
@@ -272,12 +272,9 @@ byte actual_movement = no_movement;
 byte prev_movement = no_movement;
 byte prev_movement2 = no_movement;
 byte prev_movement3 = no_movement;
-//boolean follow2 = false;
-//boolean aut_mov = false;
-//boolean idle_mov = false;
 int movementI = 0;
 unsigned long int randomTurnTime = 15000 + rand() % (20000);
-unsigned long int randomIdleTurnTime = 3000 + rand() % (7000);
+//unsigned long int randomIdleTurnTime = 3000 + rand() % (7000);
 unsigned long int lastObstacleTime = 0;
 int obstacleCount = 0;
 int dir = rand() % 2;

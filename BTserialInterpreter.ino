@@ -7,16 +7,9 @@ double actual_posY = 0;
 double prev_posTh = 0;
 double actual_posTh = 0;
 
-#define SCARED_KI 2.5
-#define SCARED_KP 2.0
-#define SCARED_SPD 45.0
 
-#define HAPPY_KI 0.8
-#define HAPPY_KP 0.35
-#define HAPPY_SPD 35.0
-
-#define SAD_KI 0.3
-#define SAD_KP 0.2
+#define SCARED_SPD 47.0
+#define HAPPY_SPD 39.0
 #define SAD_SPD 15.0
 
 void btInterpreter() {
@@ -108,22 +101,28 @@ void movementPanel() {
     case '0':
       //resetButtons();
       if (actual_movement == no_movement) {
-        if (prev_movement != idle && prev_movement != follow && prev_movement != autonomous_movement) {
+        if (prev_movement != autonomous_capa && prev_movement != follow && prev_movement != autonomous_movement) {
           triskar.stop3();
           //triskar.stop2();
           move = false;
         } else if (prev_movement == follow) {
           actual_movement = follow;
           prev_movement = no_movement;
+          prev_movement2 = no_movement;
+          prev_movement3 = no_movement;
         }
         else if (prev_movement == autonomous_movement) {
           actual_movement = autonomous_movement;
           prev_movement = no_movement;
+          prev_movement2 = no_movement;
+          prev_movement3 = no_movement;
         }
-        else if (prev_movement == idle) {
+        else if (prev_movement == autonomous_capa) {
           //startMovement(idle, rainbow_cycle);
-          actual_movement = idle;
+          actual_movement = autonomous_capa;
           prev_movement = no_movement;
+          prev_movement2 = no_movement;
+          prev_movement3 = no_movement;
         }
       }
       //}
@@ -153,6 +152,8 @@ void movementPanel() {
         triskar.run(0.0, speed_trg / robot_radius);
         movementFinishTime = millis();
       } else if (actual_movement == autonomous_movement || actual_movement == follow || actual_movement == autonomous_capa) {
+        prev_movement3 = prev_movement2;
+        prev_movement2 = prev_movement;
         prev_movement = actual_movement;
         actual_movement = no_movement;
         movementFinishTime = millis();
@@ -168,6 +169,8 @@ void movementPanel() {
         triskar.run(0.0, -speed_trg / robot_radius);
         movementFinishTime = millis();
       } else if (actual_movement == autonomous_movement || actual_movement == follow || actual_movement == autonomous_capa) {
+        prev_movement3 = prev_movement2;
+        prev_movement2 = prev_movement;
         prev_movement = actual_movement;
         actual_movement = no_movement;
         movementFinishTime = millis();

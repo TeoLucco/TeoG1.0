@@ -34,31 +34,7 @@ void iMfollowingU() {
       triskar.run(mapfloat(actual_distance, 0, 400, 0, 40.0), 0.0);
     }
   } else {
-    //    if (lost > 10 && millis() - lastLost > 20000) {
-    //      lastLost=millis();
-    //      startMovement(make_sad1,yellowC, color_wipe, Come_backtome_audio);
-    //      lost = 0;
-    //    }
-    //    else if (((f_right<f_left+error && f_right>f_left-error)||(f_left<f_right+error && f_left<f_right-error)) && back_obstacle!=veryCloseOb && front_obstacle==veryCloseOb ) lost++;
-    //    /*
-    //    */
-    //    else if(backI >= 10 && millis() - lastround > 5000){
-    //     lastround = millis();
-    //      backI = 0;
-    //      last_obstacle = none;
-    //      alpha = PI;
-    //      if (dir == 1){
-    //        startMovement(turnAlphaL);
-    //        playS(eccoti_audio);
-    //      }else{
-    //        startMovement(turnAlphaR);
-    //        playS(eccoti_audio);
-    //      }
-    //      dir = rand() % 2;
-    //    }else if(f_back<=80.0 && ((f_right<f_left+error && f_right>f_left-error)||(f_left<f_right+error && f_left<f_right-error)) && front_obstacle==veryCloseOb) backI++;
-    //
-    /*
-    */
+   
     if ((back_obstacle == closeOb || back_obstacle == veryCloseOb)  && millis() - lastround > 10000 && actual_distance == previous_distance && backI >= 3 && triskar.isStopped() && actual_obstacle != none) {
       lastround = millis();
       //stopMovement();
@@ -942,11 +918,11 @@ void stopMovement(int i) {
 }
 
 
-void switchToIdle() {
-  if (millis() - movementFinishTime > switchToIdleTime && interpreterState == fam_modality) {
-    startMovement(idle, rainbow_cycle);
-  }
-}
+//void switchToIdle() {
+//  if (millis() - movementFinishTime > switchToIdleTime && interpreterState == fam_modality) {
+//    startMovement(idle, rainbow_cycle);
+//  }
+//}
 
 void makeMovement() {
   if (move) {
