@@ -384,7 +384,7 @@ void stopMovement() {
 
 
 void obstacle_stop_movement() {
-  if (actual_movement == scared_hit || actual_movement == scared_hitR || actual_movement == scared_hitL) {
+  if (actual_movement == scared_hit || actual_movement == scared_hitR || actual_movement == scared_hitL || actual_movement == make_sad2 || actual_movement == make_sad2L || actual_movement == make_sad2R) {
     if ( (triskar.getDirection() == 1) && (front_obstacle == veryCloseOb || left_obstacle == veryCloseOb || right_obstacle == veryCloseOb) ) {
       actual_movement = no_movement;
       startMovement(dontwonna, redC, color_pulse);
