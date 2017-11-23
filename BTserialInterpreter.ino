@@ -356,7 +356,34 @@ void playAudio() {
 //        break;
 
 void sendState() {//send data from arduino to App
-    Serial3.println("*A" + String(interpreterState) + "*");
+  Serial3.println("*A" + String(interpreterState) + "*");
+//  if (millis() - lastBatteryUpdate > BATTERY_UPDATE_TIME && triskar.isStopped()) {
+  battery_indicator = constrain(mapfloat(voltage, MIN_INDICATOR_VOLTAGE, MAX_INDICATOR_VOLTAGE, MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE), MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE);
+  Serial3.println("*B" + String(battery_indicator) + "*");
+//    lastBatteryUpdate = millis();
+//  }
+  Serial3.println("*C" + String(speed_trg) + "*");
+  Serial3.println("*D" + String(f_front) + "*");
+  Serial3.println("*L" + String(f_left) + "*");
+  Serial3.println("*R" + String(f_right) + "*");
+  Serial3.println("*S" + String(f_back) + "*");
+  Serial3.println("*F" + String(fotores_value) + "*");
+  Serial3.println("*M" + String(micro_f) + "*");
+  Serial3.println("*g" + String(microSoglia) + "*");
+  Serial3.println("*s" + String(FAR_DISTANCE) + "*");
+  Serial3.println("*t" + String(volume) + "*");
+//  Serial3.println("*Q" + String(triskar.getSpeedX()) + "*");
+//  Serial3.println("*N" + String(actual_movement) + "*");
+//  Serial3.println("*O" + String(prev_movement) + "*");
+//  Serial3.println("*h" + String(actual_obstacle) + "*");
+//  Serial3.println("*i" + String(last_obstacle) + "*");
+//  Serial3.println("*l" + String(targetPos) + "*");
+//  Serial3.println("*m" + String(right_obstacle) + "*");
+//  Serial3.println("*n" + String(left_obstacle) + "*");
+//  Serial3.println("*o" + String(front_obstacle) + "*");
+//  Serial3.println("*p" + String(previous_distance) + "*");
+//  Serial3.println("*q" + String(actual_distance) + "*");
+//  Serial3.println("*r" + String(touched) + "*");
 //  prev_posX = actual_posX;
 //  actual_posX = triskar.getPosX();
 //  prev_posY = actual_posY;
@@ -372,33 +399,7 @@ void sendState() {//send data from arduino to App
 //  if (actual_posTh != prev_posTh) {
 //    Serial3.println("*T" + String(actual_posTh) + "*");
 //  }
-//  if (millis() - lastBatteryUpdate > BATTERY_UPDATE_TIME && triskar.isStopped()) {
-  battery_indicator = constrain(mapfloat(voltage, MIN_INDICATOR_VOLTAGE, MAX_INDICATOR_VOLTAGE, MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE), MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE);
-  Serial3.println("*B" + String(battery_indicator) + "*");
-//    lastBatteryUpdate = millis();
-//  }
-  Serial3.println("*C" + String(speed_trg) + "*");
-//  Serial3.println("*Q" + String(triskar.getSpeedX()) + "*");
-//  Serial3.println("*N" + String(actual_movement) + "*");
-//  Serial3.println("*O" + String(prev_movement) + "*");
-  Serial3.println("*D" + String(f_front) + "*");
-  Serial3.println("*L" + String(f_left) + "*");
-  Serial3.println("*R" + String(f_right) + "*");
-  Serial3.println("*S" + String(f_back) + "*");
-  Serial3.println("*F" + String(fotores_value) + "*");
-  Serial3.println("*M" + String(micro_f) + "*");
-  Serial3.println("*g" + String(microSoglia) + "*");
-//  Serial3.println("*h" + String(actual_obstacle) + "*");
-//  Serial3.println("*i" + String(last_obstacle) + "*");
-//  Serial3.println("*l" + String(targetPos) + "*");
-//  Serial3.println("*m" + String(right_obstacle) + "*");
-//  Serial3.println("*n" + String(left_obstacle) + "*");
-//  Serial3.println("*o" + String(front_obstacle) + "*");
-//  Serial3.println("*p" + String(previous_distance) + "*");
-//  Serial3.println("*q" + String(actual_distance) + "*");
-//  Serial3.println("*r" + String(touched) + "*");
-Serial3.println("*s" + String(FAR_DISTANCE) + "*");
-Serial3.println("*t" + String(volume) + "*");
+
 }
 
 
