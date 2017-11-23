@@ -118,7 +118,7 @@ void sendSerial() {
       case body: Serial.write(2); if(actual_movement==autonomous_capa)Serial.write(4);else Serial.write(5); break;
       case both: Serial.write(3); break;
     }
-    Serial3.println("*E" + String(workingCapacitives) + "*");
+    //Serial3.println("*E" + String(workingCapacitives) + "*");
     previousWorkingCapacitives = workingCapacitives;
   }
 }

@@ -19,7 +19,7 @@ void microLoop() {
         microLowpassFilter.setToNewValue(0.0);
         microI = 0;
       }
-    } else if (interpreterState != test_modality) microLowpassFilter.setToNewValue(0.0);
+    } else microLowpassFilter.setToNewValue(0.0);
     if (millis() - lastadd > 500) {
       microI = 0;
     }

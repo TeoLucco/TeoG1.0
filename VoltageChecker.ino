@@ -58,6 +58,7 @@ void voltageCheckloop()
     // calculate the voltage
     // use 5.0 for a 5.0V ADC reference voltage
     // 5.015V is the calibrated reference voltage
+    if(triskar.isStopped())
     voltage = (((float)sum / (float)NUM_SAMPLES * 5.005) / 1024.0)*4.013;
     // send voltage for display on Serial Monitor
     // voltage multiplied by 11 when using voltage divider that

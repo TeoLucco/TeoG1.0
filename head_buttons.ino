@@ -47,7 +47,7 @@ void headCapacitiveInterpreter() {
       case choose_scenario: chooseScenarioCap(); break;
       case game_modality:   break;
       case fam_modality:    break;
-      case test_modality:   break;
+      //case test_modality:   break;
       case discharge:       break;
     }
   } 

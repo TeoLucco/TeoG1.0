@@ -179,13 +179,13 @@ void movementPanel() {
     case '5':
       speed_trg -= 3;
       if (speed_trg < 0)     speed_trg = 0;
-      Serial3.println("*C" + String(speed_trg) + "*");
+      //Serial3.println("*C" + String(speed_trg) + "*");
       break;
 
     case '6':
       speed_trg += 3;
       if (speed_trg > 45)   speed_trg = 45;
-      Serial3.println("*C" + String(speed_trg) + "*");
+      //Serial3.println("*C" + String(speed_trg) + "*");
       break;
 
 //    case 'f':
@@ -233,13 +233,13 @@ void settings() {
     case 'c': fotoresistor = false; break;
     case 'd': micro = true; break;
     case 'e': micro = false; break;
-    case 'f': microSoglia=Serial3.parseInt();EEPROM.put(microEEPROMADDR, microSoglia); Serial3.println("*g" + String(microSoglia) + "*");break;
-    case 'l': /*triskar.setKi(SCARED_KI); triskar.setKp(SCARED_KP);*/ bodyLedUpdate(color_pulse, orangeC); speed_trg = SCARED_SPD;Serial3.println("*C" + String(speed_trg) + "*"); break;
-    case 'm': /*triskar.setKi(HAPPY_KI); triskar.setKp(HAPPY_KP);*/ bodyLedUpdate(color_pulse, greenC); speed_trg = HAPPY_SPD; Serial3.println("*C" + String(speed_trg) + "*");break;
-    case 'n': /*triskar.setKi(SAD_KI); triskar.setKp(SAD_KP);*/ bodyLedUpdate(color_pulse, blueC); speed_trg = SAD_SPD; Serial3.println("*C" + String(speed_trg) + "*");break;
-    case 'p': bodyLedUpdate(led_off); speed_trg =35; Serial3.println("*C" + String(speed_trg) + "*");break;
-    case 'g': FAR_DISTANCE=Serial3.parseInt();EEPROM.put(farDistanceEEPROMADDR, FAR_DISTANCE); Serial3.println("*s" + String(FAR_DISTANCE) + "*");break;
-    case 'h': int volume=Serial3.parseInt(); myDFPlayer.volume(volume);Serial3.println("*t" + String(volume) + "*");break;
+    case 'f': microSoglia=Serial3.parseInt();EEPROM.put(microEEPROMADDR, microSoglia); break;
+    case 'l': /*triskar.setKi(SCARED_KI); triskar.setKp(SCARED_KP);*/ bodyLedUpdate(color_pulse, orangeC); speed_trg = SCARED_SPD;/*Serial3.println("*C" + String(speed_trg) + "*");*/ break;
+    case 'm': /*triskar.setKi(HAPPY_KI); triskar.setKp(HAPPY_KP);*/ bodyLedUpdate(color_pulse, greenC); speed_trg = HAPPY_SPD; /*Serial3.println("*C" + String(speed_trg) + "*");*/break;
+    case 'n': /*triskar.setKi(SAD_KI); triskar.setKp(SAD_KP);*/ bodyLedUpdate(color_pulse, blueC); speed_trg = SAD_SPD; /*Serial3.println("*C" + String(speed_trg) + "*");*/break;
+    case 'p': bodyLedUpdate(led_off); speed_trg =35; /*Serial3.println("*C" + String(speed_trg) + "*");*/break;
+    case 'g': FAR_DISTANCE=Serial3.parseInt();EEPROM.put(farDistanceEEPROMADDR, FAR_DISTANCE); break;
+    case 'h': volume=Serial3.parseInt(); myDFPlayer.volume(volume);break;
   }
 }
 
@@ -356,31 +356,31 @@ void playAudio() {
 //        break;
 
 void sendState() {//send data from arduino to App
-  Serial3.println("*A" + String(interpreterState) + "*");
-  prev_posX = actual_posX;
-  actual_posX = triskar.getPosX();
-  prev_posY = actual_posY;
-  actual_posY = triskar.getPosY();
-  prev_posTh = actual_posTh;
-  actual_posTh = triskar.getPosTh();
-  if (actual_posX != prev_posX) {
-    Serial3.println("*X" + String(actual_posX) + "*");
-  }
-  if (actual_posY != prev_posY) {
-    Serial3.println("*Y" + String(actual_posY) + "*");
-  }
-  if (actual_posTh != prev_posTh) {
-    Serial3.println("*T" + String(actual_posTh) + "*");
-  }
-  if (millis() - lastBatteryUpdate > BATTERY_UPDATE_TIME && triskar.isStopped()) {
-    battery_indicator = constrain(mapfloat(voltage, MIN_INDICATOR_VOLTAGE, MAX_INDICATOR_VOLTAGE, MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE), MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE);
-    Serial3.println("*B" + String(battery_indicator) + "*");
-    lastBatteryUpdate = millis();
-  }
+    Serial3.println("*A" + String(interpreterState) + "*");
+//  prev_posX = actual_posX;
+//  actual_posX = triskar.getPosX();
+//  prev_posY = actual_posY;
+//  actual_posY = triskar.getPosY();
+//  prev_posTh = actual_posTh;
+//  actual_posTh = triskar.getPosTh();
+//  if (actual_posX != prev_posX) {
+//    Serial3.println("*X" + String(actual_posX) + "*");
+//  }
+//  if (actual_posY != prev_posY) {
+//    Serial3.println("*Y" + String(actual_posY) + "*");
+//  }
+//  if (actual_posTh != prev_posTh) {
+//    Serial3.println("*T" + String(actual_posTh) + "*");
+//  }
+//  if (millis() - lastBatteryUpdate > BATTERY_UPDATE_TIME && triskar.isStopped()) {
+  battery_indicator = constrain(mapfloat(voltage, MIN_INDICATOR_VOLTAGE, MAX_INDICATOR_VOLTAGE, MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE), MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE);
+  Serial3.println("*B" + String(battery_indicator) + "*");
+//    lastBatteryUpdate = millis();
+//  }
   Serial3.println("*C" + String(speed_trg) + "*");
-  Serial3.println("*Q" + String(triskar.getSpeedX()) + "*");
-  Serial3.println("*N" + String(actual_movement) + "*");
-  Serial3.println("*O" + String(prev_movement) + "*");
+//  Serial3.println("*Q" + String(triskar.getSpeedX()) + "*");
+//  Serial3.println("*N" + String(actual_movement) + "*");
+//  Serial3.println("*O" + String(prev_movement) + "*");
   Serial3.println("*D" + String(f_front) + "*");
   Serial3.println("*L" + String(f_left) + "*");
   Serial3.println("*R" + String(f_right) + "*");
@@ -388,15 +388,17 @@ void sendState() {//send data from arduino to App
   Serial3.println("*F" + String(fotores_value) + "*");
   Serial3.println("*M" + String(micro_f) + "*");
   Serial3.println("*g" + String(microSoglia) + "*");
-  Serial3.println("*h" + String(actual_obstacle) + "*");
-  Serial3.println("*i" + String(last_obstacle) + "*");
-  Serial3.println("*l" + String(targetPos) + "*");
-  Serial3.println("*m" + String(right_obstacle) + "*");
-  Serial3.println("*n" + String(left_obstacle) + "*");
-  Serial3.println("*o" + String(front_obstacle) + "*");
-  Serial3.println("*p" + String(previous_distance) + "*");
-  Serial3.println("*q" + String(actual_distance) + "*");
-  Serial3.println("*r" + String(touched) + "*");
+//  Serial3.println("*h" + String(actual_obstacle) + "*");
+//  Serial3.println("*i" + String(last_obstacle) + "*");
+//  Serial3.println("*l" + String(targetPos) + "*");
+//  Serial3.println("*m" + String(right_obstacle) + "*");
+//  Serial3.println("*n" + String(left_obstacle) + "*");
+//  Serial3.println("*o" + String(front_obstacle) + "*");
+//  Serial3.println("*p" + String(previous_distance) + "*");
+//  Serial3.println("*q" + String(actual_distance) + "*");
+//  Serial3.println("*r" + String(touched) + "*");
+Serial3.println("*s" + String(FAR_DISTANCE) + "*");
+Serial3.println("*t" + String(volume) + "*");
 }
 
 

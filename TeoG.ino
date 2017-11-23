@@ -31,16 +31,16 @@ boolean select;
 //boolean noneB=true;
 char b = ' ';
 //interpreter states
-enum btStates {choose_modality, fam_modality, choose_game,choose_scenario, sg_waiting, game_modality, test_modality, discharge};
+enum btStates {choose_modality, fam_modality, choose_game,choose_scenario, sg_waiting, game_modality, discharge};
 btStates interpreterState = choose_modality;
 boolean btMov = false;
 unsigned long int fam_modality_start_time=0;
 //HARDWARE TESTS
-enum testStates { tests_descr, choose_test, start_test, test_exe};
-testStates testState = tests_descr;
-
-enum testTypes { no_one, sonar_t, head_capacitives_t, body_capacitives_t, fotores_t, speaker_t, micro_t};
-testTypes testType = no_one;
+//enum testStates { tests_descr, choose_test, start_test, test_exe};
+//testStates testState = tests_descr;
+//
+//enum testTypes { no_one, sonar_t, head_capacitives_t, body_capacitives_t, fotores_t, speaker_t, micro_t};
+//testTypes testType = no_one;
 
 
 //FOTORESISTOR
@@ -111,6 +111,7 @@ boolean bodyCapacitor=true;
 boolean fotoresistor=true;
 unsigned long int startPlayTime = 0;
 int lastPlayed = 0;
+int volume=30;
 DFRobotDFPlayerMini myDFPlayer;
 #define BUSY_PIN 5
 
@@ -135,7 +136,7 @@ unsigned long int loopStartTime=0;
 #define N_HITS 3
 int abbraccioN = 0;
 enum warKingsCapacitives {noOne, head, body, both};
-warKingsCapacitives workingCapacitives = body;
+warKingsCapacitives workingCapacitives = noOne;
 warKingsCapacitives previousWorkingCapacitives = noOne;
 enum touched_parts {noWhere, leftT, rightT, frontT};
 touched_parts touched = noWhere;
@@ -373,9 +374,8 @@ void loop() {
   fotoresLoop();
   microLoop();
   headLedLoop();
-  print();
   //attuatori
-  if (interpreterState != test_modality && interpreterState != choose_modality) {
+  if (interpreterState != choose_modality) {
     pidLoop();
     makeMovement();
     gameModality();
@@ -394,147 +394,6 @@ void pidLoop() {
   }
 }
 
-void print()  {
-
-  if ((millis() - lastMilliPrint) >= 50)   {
-    lastMilliPrint = millis();
-
-    /*    Serial.print("DONTWONNA:  ");
-        Serial.println(movementI);
-        Serial.print("MOV START TIME: ");
-        Serial.println(movStartTime);
-        Serial.print("START POS TH: ");
-        Serial.println(startPosTh);
-    */
-    /*Serial.print("SP:  ");     Serial.print(speed_req[0]); Serial.print("    "); Serial.print(speed_req[1]); Serial.print("    "); Serial.println(speed_req[2]);
-      Serial.print("RPM: ");     Serial.print(speed_act[0]); Serial.print("    "); Serial.print(speed_act[1]); Serial.print("    "); Serial.println(speed_act[2]);
-      Serial.print("PWM: ");     Serial.print(PWM_val[0]);  Serial.print("   "); Serial.print(PWM_val[1]);   Serial.print("    "); Serial.println(PWM_val[2]);
-      Serial.print("POS: ");   Serial.print(posReader1.read());Serial.print("    "); Serial.print(posReader2.read());Serial.print("    "); Serial.println(posReader3.read());
-    */
-    /*
-      if(targetPos==0) Serial.println("FRONT");
-      else if (targetPos<0) Serial.println("LEFT");
-      else if (targetPos>0) Serial.println("RIGHT");
-    */
-
-    //    Serial.print("  TargetPos:  ");
-    //    Serial.print(targetPos);
-    //    Serial.print("  Actual Obstacle:  ");
-    //    switch(actual_obstacle){
-    //      case 0: Serial.print("left");break;
-    //      case 1: Serial.print("right");break;
-    //      case 2: Serial.print("front");break;
-    //      case 3: Serial.print("none");break;
-    //    }
-    //    Serial.print("  Last Obstacle:  ");
-    //    switch(last_obstacle){
-    //      case 0: Serial.println("left");break;
-    //      case 1: Serial.println("right");break;
-    //      case 2: Serial.println("front");break;
-    //      case 3: Serial.println("none");break;
-    //    }
-
-
-    /*    Serial.print("  BACK: ");
-      Serial.println(cm[3]);
-    */
-    /*  Serial.print("triskar PosX  "); Serial.println(triskar.getPosX());
-      Serial.print("triskar PosY "); Serial.println(triskar.getPosY());
-      Serial.print("triskar PosTh "); Serial.println(triskar.getPosTh());
-      Serial.print("triskar SpeedX  "); Serial.println(triskar.getSpeedX());
-      Serial.print("triskar SpeedY "); Serial.println(triskar.getSpeedY());
-      Serial.print("triskar SpeedTh "); Serial.println(triskar.getPosTh());
-      /*
-      Serial.println(voltage);
-      Serial.println(fotores_value);
-      /*Serial.print("millis()-movementFinishTime:  "); Serial.println(millis()-movementFinishTime);
-      Serial.print("actual_movement  "); Serial.println(actual_movement);
-      Serial.print("digitalRead(BUSY_PIN)  "); Serial.println(digitalRead(BUSY_PIN));
-      Serial.print("gameState  "); Serial.println(gameState);
-      Serial.print("triskar.isStopped()  "); Serial.println(triskar.isStopped());*/
-    /*    Serial.print("micro val: "); Serial.println(microLowpassFilter.output());
-        Serial.print("microI: "); Serial.println(microI);
-      /*  Serial.print("actual_movement:  "); Serial.println(actual_movement);
-      Serial.print("myDFPlayer.available():  "); Serial.println(myDFPlayer.available());
-      /* Serial.print("gameState:  "); Serial.println(gameState);
-      //Serial.print("led val: "); Serial.println(ledI);*/
-    /*Serial.print("obstacleCount: "); Serial.print(obstacleCount);
-      //Serial.print("  millis: "); Serial.print(millis());
-      Serial.print("  millis - mov Start Time: "); Serial.print(millis()-movStartTime);
-      Serial.print("  rand turn Time: "); Serial.print(randomTurnTime);
-      Serial.print("lastObstacleTime"); Serial.println(lastObstacleTime);
-      //millis()-movStartTime>=randomTurnTime || movementI>=5
-      /*Serial.print("movement I2: "); Serial.println(movementI2);
-      Serial.print("actual pos: "); Serial.println(triskar.getPosTh());
-      /*Serial.print("target pos: "); Serial.println(startPosTh+PI/12.0);
-      Serial.print(gameState);
-      /*
-      Serial3.print("left: ");Serial3.print(bodySensorValue[0]);
-      /*if(bodySensorValue[0]>maxSensor)
-      maxSensor=bodySensorValue[0];
-      Serial3.print("   max: ");Serial3.println(maxSensor);
-      Serial3.print("    right: ");Serial3.print(bodySensorValue[1]);
-      Serial3.print("    behind: ");Serial3.print(bodySensorValue[2]);Serial3.print("    front: ");Serial3.print(bodySensorValue[3]);
-      Serial3.print("    Pressed Button: "); Serial3.println(pressedButton);
-      Serial3.print(stateStartTime[1] - previousStateStartTime[1]);Serial3.print("    ");
-      Serial3.print(bodySensorValue[1]); Serial3.print("    ");Serial3.print(capacitiveState[1]); Serial3.print("    ");
-      Serial3.print(previousDynamicCapacitiveState[1]); Serial3.print("    "); Serial3.print(previousCapacitiveState[1]); Serial3.print("    ");
-      Serial3.print("    ");*/
-    /*
-          Serial3.print(bodySensorValue[0]); Serial3.print("    "); Serial3.print(bodySensorValue[1]); Serial3.print("    ");
-        Serial3.print(bodySensorValue[2]); Serial3.print("    "); Serial3.println(pressedButton);
-        Serial3.print(headSensorValue[0]); Serial3.print("    "); Serial3.print(headSensorValue[1]); Serial3.print("    ");
-        Serial3.print(headSensorValue[2]); Serial3.print("    "); Serial3.print(headSensorValue[3]); Serial3.print("    "); Serial3.println(pressedButton);
-      /*
-       Serial3.print(bodySensorValue[0]); Serial3.print("    "); Serial3.print(capacitiveState[0]);Serial3.print("    ");
-       Serial3.print(bodySensorValue[1]); Serial3.print("    "); Serial3.print(capacitiveState[1]);Serial3.print("    ");
-       Serial3.print(bodySensorValue[2]); Serial3.print("    "); Serial3.print(capacitiveState[2]);Serial3.print("    ");
-       Serial3.println(touchState);
-      /*  Serial3.print(f_right);
-        Serial3.print(" ");
-        Serial3.print(f_front);
-        Serial3.print(" ");
-        Serial3.print(f_left);
-        Serial3.print(" ");
-        Serial3.println(f_back);
-      /* Serial3.print("PosX:  "); Serial3.print(triskar.getPosX());
-       Serial3.print(" PosY:  "); Serial3.print(triskar.getPosY());
-       Serial3.print(" PosTh:  "); Serial3.print(triskar.getPosTh());
-       Serial3.print(" SpeedX:  "); Serial3.print(triskar.getSpeedX());
-       Serial3.print(" SpeedY:  "); Serial3.print(triskar.getSpeedY());
-       Serial3.print(" SpeedTh:  "); Serial3.println(triskar.getSpeedTh());
-        /*
-          Serial3.print(millis() - stateStartTime[0]); Serial3.print("    ");
-          Serial3.print(millis() - stateStartTime[1]); Serial3.print("    ");
-          Serial3.print(millis() - stateStartTime[2]);Serial3.print("    ");
-          Serial3.println(bodySensorValue[2]);
-          /*
-            Serial.print("Actual_movement:   "); Serial.print(actual_movement); Serial.print("  prec_movement:   "); Serial.println(prec_movement);
-    */
-
-
-    /*Serial.print(millis()); Serial.print(",");
-      Serial.print(speedX); Serial.print(",");
-      Serial.print(speedY); Serial.print(",");
-      Serial.print(speedTh); Serial.print(",");*/
-
-    /*Serial3.print(millis()); Serial3.print(",");
-      Serial3.print(speedX); Serial3.print(",");
-      Serial3.print(speedY); Serial3.print(",");
-      Serial3.print(speedTh); Serial3.print(",");*/
-
-    /*
-        Serial.print(posX); Serial.print(",");
-        Serial.print(posY); Serial.print(",");
-        Serial.print(posTh);Serial.print(",");
-        Serial.println(k);
-    */
-
-//      Serial3.print(triskar.getPosX()); Serial3.print(" , ");
-//      Serial3.print(triskar.getPosY()); Serial3.print(" , ");
-//      Serial3.println(triskar.getPosTh());
-  }
-}
 
 
 
