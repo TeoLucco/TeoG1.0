@@ -28,7 +28,7 @@ void btInterpreter() {
     case game_modality:   gameMod(); break;
     case fam_modality:    famMod(); break;
     case discharge:       disCharge(); break;
-    case test_modality:   hardwareTests(); break;
+//    case test_modality:   hardwareTests(); break;
   }
 }
 
@@ -41,8 +41,8 @@ void chooseModality() {
         interpreterState = choose_game;
         playS(game_mod_audio);
         delay(2000);
-        Serial3.println();
-        Serial3.println("Selezionare Gioco");
+        //Serial3.println();
+        //Serial3.println("Selezionare Gioco");
         playS(CHOOSE_GAME_AUDIO);
         break;
       case')':
@@ -237,7 +237,9 @@ void settings() {
     case 'l': /*triskar.setKi(SCARED_KI); triskar.setKp(SCARED_KP);*/ bodyLedUpdate(color_pulse, orangeC); speed_trg = SCARED_SPD;Serial3.println("*C" + String(speed_trg) + "*"); break;
     case 'm': /*triskar.setKi(HAPPY_KI); triskar.setKp(HAPPY_KP);*/ bodyLedUpdate(color_pulse, greenC); speed_trg = HAPPY_SPD; Serial3.println("*C" + String(speed_trg) + "*");break;
     case 'n': /*triskar.setKi(SAD_KI); triskar.setKp(SAD_KP);*/ bodyLedUpdate(color_pulse, blueC); speed_trg = SAD_SPD; Serial3.println("*C" + String(speed_trg) + "*");break;
+    case 'p': bodyLedUpdate(led_off); speed_trg =35; Serial3.println("*C" + String(speed_trg) + "*");break;
     case 'g': FAR_DISTANCE=Serial3.parseInt();EEPROM.put(farDistanceEEPROMADDR, FAR_DISTANCE); Serial3.println("*s" + String(FAR_DISTANCE) + "*");break;
+    case 'h': int volume=Serial3.parseInt(); myDFPlayer.volume(volume);Serial3.println("*t" + String(volume) + "*");break;
   }
 }
 
@@ -354,10 +356,7 @@ void playAudio() {
 //        break;
 
 void sendState() {//send data from arduino to App
-  if (millis() - lastSendState > SENDSTATETIME) {
-    Serial3.println("*A" + String(interpreterState) + "*");
-    lastSendState = millis();
-  }
+  Serial3.println("*A" + String(interpreterState) + "*");
   prev_posX = actual_posX;
   actual_posX = triskar.getPosX();
   prev_posY = actual_posY;
@@ -373,7 +372,7 @@ void sendState() {//send data from arduino to App
   if (actual_posTh != prev_posTh) {
     Serial3.println("*T" + String(actual_posTh) + "*");
   }
-  if (millis() - lastBatteryUpdate > BATTERY_UPDATE_TIME) {
+  if (millis() - lastBatteryUpdate > BATTERY_UPDATE_TIME && triskar.isStopped()) {
     battery_indicator = constrain(mapfloat(voltage, MIN_INDICATOR_VOLTAGE, MAX_INDICATOR_VOLTAGE, MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE), MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE);
     Serial3.println("*B" + String(battery_indicator) + "*");
     lastBatteryUpdate = millis();
@@ -409,14 +408,16 @@ void chooseGame() {
       case '0':
         interpreterState = choose_scenario;
         currentGameI = 0;
+        playS(you_choosed_game_audio);
+        delay(2000);
         playS(currentGameI+1);
-        Serial3.print("Selezionato Gioco: "); Serial3.println(currentGameI);
-        Serial3.println("Selezionare Scenario");
         //        }
         break;
       case '1':
         interpreterState = choose_scenario;
         currentGameI = 1;
+        playS(you_choosed_game_audio);
+        delay(2000);
         playS(currentGameI+1);
         //        }
         break;
@@ -424,18 +425,24 @@ void chooseGame() {
       case '2':
         interpreterState = choose_scenario;
         currentGameI = 2;
+        playS(you_choosed_game_audio);
+        delay(2000);
         playS(currentGameI+1);
 
         break;
       case '3':
         interpreterState = choose_scenario;
         currentGameI = 3;
+        playS(you_choosed_game_audio);
+        delay(2000);
         playS(currentGameI+1);
 
         break;
        case '4':
         interpreterState = choose_scenario;
         currentGameI = 4;
+        playS(you_choosed_game_audio);
+        delay(2000);
         playS(currentGameI+1);
 
         break;

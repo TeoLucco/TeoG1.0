@@ -13,9 +13,9 @@ struct Scenario {
   int n_questions;
   int audio_indices[maxQuestionsPerEx] ;
   bool correct_answers[maxQuestionsPerEx][N_HEAD_SENSORS];
-//  int n_answers[maxQuestionsPerEx];
-//  unsigned long int questionResponseTime[maxQuestionsPerEx];
-//  boolean givenAnswersReport[maxQuestionsPerEx];
+  //  int n_answers[maxQuestionsPerEx];
+  //  unsigned long int questionResponseTime[maxQuestionsPerEx];
+  //  boolean givenAnswersReport[maxQuestionsPerEx];
 
   String Id;
 };
@@ -142,7 +142,7 @@ t_Game games[] =
       },
       { 4,
         {    135,          122,       123,      124},
-        { {false, false, true, false} , {true, true, false, true}, {false, true, false, false},{false, false, false, true}},
+        { {false, false, true, false} , {true, true, false, true}, {false, true, false, false}, {false, false, false, true}},
         "SCENARIO6"
       }
     }
@@ -150,12 +150,12 @@ t_Game games[] =
   { 3,//numero scenari gioco 3
     { { 5,
         {    126,         127,       128,        129,        130},
-        { {true, false, false, false} , {false, false, false, true}, {false, false, true, false}, {false, false, true, false},{false, true, false, false}},
+        { {true, false, false, false} , {false, false, false, true}, {false, false, true, false}, {false, false, true, false}, {false, true, false, false}},
         "SCENARIO1"
       },
       { 5,
         {    131,         132,       133,        134,       127},
-        { {false, false, false, true} , {true, false, true, true}, {false, false, false, true}, {false, false, false, true},{false, true, false, false}},
+        { {false, false, false, true} , {true, false, true, true}, {false, false, false, true}, {false, false, false, true}, {false, true, false, false}},
         "SCENARIO2"
       },
       { 4,
@@ -184,7 +184,7 @@ boolean givenAnswersReport[maxQuestionsPerEx];
 void setupScenario(struct Scenario &s) {
   //Serial3.println(s.Id);
   for (int i = 0; i < s.n_questions; i++) {
-    n_answers[i]=0;
+    n_answers[i] = 0;
   }
   for (int i = 0; i < s.n_questions; i++) {
     questionResponseTime[i] = 5;
@@ -205,15 +205,17 @@ void settingGame() {
   gameState = make_question;
 }
 
-void turnOnLed(){
+void turnOnLed() {
   t_Scenario &s = games[currentGameI].scenarios[currentScenarioI];
-  for(int i=0; i<N_HEAD_SENSORS; i++){
-    if(s.correct_answers[currentQuestionI][i]){
-      switch(i){
-        case 0: bodyLedUpdate(color_wipe,redC);headLedUpdate(red,color_wipe);break;
-        case 1: bodyLedUpdate(color_wipe,greenC);headLedUpdate(green,color_wipe);break;
-        case 2: bodyLedUpdate(color_wipe,yellowC);headLedUpdate(yellow,color_wipe);break;
-        case 3: bodyLedUpdate(color_wipe,blueC);headLedUpdate(blue,color_wipe);break;
+  if (currentGameI == 0) {
+    for (int i = 0; i < N_HEAD_SENSORS; i++) {
+      if (s.correct_answers[currentQuestionI][i]) {
+        switch (i) {
+          case 0: bodyLedUpdate(color_wipe, redC); headLedUpdate(red, color_wipe); break;
+          case 1: bodyLedUpdate(color_wipe, greenC); headLedUpdate(green, color_wipe); break;
+          case 2: bodyLedUpdate(color_wipe, yellowC); headLedUpdate(yellow, color_wipe); break;
+          case 3: bodyLedUpdate(color_wipe, blueC); headLedUpdate(blue, color_wipe); break;
+        }
       }
     }
   }
@@ -221,25 +223,25 @@ void turnOnLed(){
 
 void makeQuestion() {
   t_Scenario &s = games[currentGameI].scenarios[currentScenarioI];
-  Serial3.print("currentQuestionI:  "); Serial3.println(currentQuestionI);
-    Serial3.print("s.n_questions: "); Serial3.println(s.n_questions);
-    turnOnLed();
+  //Serial3.print("currentQuestionI:  "); Serial3.println(currentQuestionI);
+  //Serial3.print("s.n_questions: "); Serial3.println(s.n_questions);
+  turnOnLed();
   if (currentQuestionI < s.n_questions) {                                   //se devo fare ancora domande
-        Serial3.println("currentQuestionI < s.n_questions");
-    Serial3.print("played audio: "); Serial3.println(s.audio_indices[currentQuestionI]);
+    //Serial3.println("currentQuestionI < s.n_questions");
+    //Serial3.print("played audio: "); Serial3.println(s.audio_indices[currentQuestionI]);
     playS(s.audio_indices[currentQuestionI]);                                 //faccio la domanda I
-       Serial3.println("Reset del vettore risposte fino ad ora");
-        Serial3.println("currentGivenAnswers: ");
+    //Serial3.println("Reset del vettore risposte fino ad ora");
+    //Serial3.println("currentGivenAnswers: ");
     for (int i = 0; i < N_HEAD_SENSORS; i++) {
       currentGivenAnswers[i] = false;                                         //azzero il vettore delle risposte date fino ad ora
-            Serial3.print(currentGivenAnswers[i]);Serial3.print(" ");
+      //Serial3.print(currentGivenAnswers[i]);Serial3.print(" ");
     }
-       Serial3.println();
+    //Serial3.println();
     currentCorrectAnswers = 0;                                               //azzero il contatore delle risposte corrette date fino ad ora
     gameState = wait_answer;                                                  //vado in stato wait answer
     startWaitingTime = millis();
-    Serial3.println("startWaitingTime: " + String(startWaitingTime));
-    Serial3.println("wait answer begin");
+    //Serial3.println("startWaitingTime: " + String(startWaitingTime));
+    //Serial3.println("wait answer begin");
   } else {                                                                   //se invece ho finito le domande
     gameState = end_game;                                                     //vado a stato end game
   }
@@ -247,14 +249,14 @@ void makeQuestion() {
 
 void waitAnswer() {
   if (workingCapacitives != head) {
-    Serial3.println("Attivo capacitivi Testa");
+    //Serial3.println("Attivo capacitivi Testa");
     //CapacitivesUpdate(head);
   }
   t_Scenario &s = games[currentGameI].scenarios[currentScenarioI];
   if (currentCorrectAnswers < n_answers[currentQuestionI]) {    //se ci sono ancora risposte da dare
     turnOnLed();
     if (currentCorrectAnswers > 0) {                                //se ho già dato una risposta
-      Serial3.println("E poi???");                                    //say:e poi??
+      //Serial3.println("E poi???");                                    //say:e poi??
       timedPlayS(ALTRA_RISPOSTA_AUDIO, 15000);
     }
     if (pressedButton != -1) {                                        //se viene premuto un bottone
@@ -266,18 +268,18 @@ void waitAnswer() {
           headLedUpdate(red, color_wipe);
           // wrong
         }
-        Serial3.println("Bottone Gia premuto per questa domanda!");
+        //Serial3.println("Bottone Gia premuto per questa domanda!");
         playS(RISPOSTA_GIA_DATA_AUDIO);                                                        // say: hai già dato questa risposta, provane un'altra
       } else {                                                          //se invece è la prima volta che prova un bottone
-        Serial3.println("Prima volta che premi il bottone!");
+        //Serial3.println("Prima volta che premi il bottone!");
         currentGivenAnswers[a] = true;                                    //mi salvo il bottone che ha premuto
         if (s.correct_answers[currentQuestionI][a]) {                     //se il bottone premuto è una risposta corretta
-          Serial3.print("s.correct_answers[currentQuestionI][a]: ");
-          Serial3.println("risposta corretta");                             // correct
+          //Serial3.print("s.correct_answers[currentQuestionI][a]: ");
+          //Serial3.println("risposta corretta");                             // correct
           currentCorrectAnswers++;                                          //incremento il contatore delle risposte corrette
           rightAnswer();                                                    //eseguo movimento right answer
         } else {                                                          //se invece la riposta è sbagliata
-          Serial3.println("risposta scorretta");
+          //Serial3.println("risposta scorretta");
           givenAnswersReport[currentQuestionI] = false;
           wrongAnswer();                                                    //say risposta sbagliata  ed esegui movimento
           // wrong
@@ -288,21 +290,21 @@ void waitAnswer() {
     }
   } else {                                                        //se non ci sono più risposte da dare
     questionResponseTime[currentQuestionI] = (millis() - startWaitingTime);
-    Serial3.println("Millis: " + String(millis()));
-    Serial3.println("startWaitingTime: " + String(startWaitingTime));
-    Serial3.println("Response Time question number " + String(currentQuestionI) + ": " + String(questionResponseTime[currentQuestionI]));
-    Serial3.println("Report question number " + String(currentQuestionI) + ": " + String(givenAnswersReport[currentQuestionI]));
+    //Serial3.println("Millis: " + String(millis()));
+    //Serial3.println("startWaitingTime: " + String(startWaitingTime));
+    //Serial3.println("Response Time question number " + String(currentQuestionI) + ": " + String(questionResponseTime[currentQuestionI]));
+    //Serial3.println("Report question number " + String(currentQuestionI) + ": " + String(givenAnswersReport[currentQuestionI]));
 
     currentQuestionI++;                                                                       //incrementa l'indice della domanda
     gameState = make_question;                                                                //vado in stato make question
-    Serial3.println("wait answer end");
+    //Serial3.println("wait answer end");
   }
 }
 
 void rightAnswer() {
   int randNumber = rand() % 4 + make_happy0;
   int randNumber2 = rand() % 3;
-  //Serial3.println("Disattivo Capacitivi");
+  ////Serial3.println("Disattivo Capacitivi");
   previousWorkingCapacitives = workingCapacitives;
   if (interpreterState == game_modality)workingCapacitives = noOne;
   else if (interpreterState == fam_modality)workingCapacitives = body;
@@ -313,9 +315,9 @@ void rightAnswer() {
   else
     playS(RIGHT_ANSWER_AUDIO3);
   //  setLedTimer(2000);
-//  bodyLedUpdate(color_wipe, greenC, 2000);
-//  headLedUpdate(green, color_wipe);
-//  startMovement(randNumber); //at the end of makeHappy function there's the gameStateChange
+  //  bodyLedUpdate(color_wipe, greenC, 2000);
+  //  headLedUpdate(green, color_wipe);
+  //  startMovement(randNumber); //at the end of makeHappy function there's the gameStateChange
   startMovement(randNumber, greenC, color_pulse);
 }
 void wrongAnswer() {
@@ -331,38 +333,42 @@ void wrongAnswer() {
   else
     playS(WRONG_ANSWER_AUDIO3);
   dir = rand() % 2;
-//  bodyLedUpdate(color_wipe, redC, 2000);
-//  headLedUpdate(red, color_wipe);
-//  startMovement(make_sad1);
+  //  bodyLedUpdate(color_wipe, redC, 2000);
+  //  headLedUpdate(red, color_wipe);
+  //  startMovement(make_sad1);
   startMovement(make_sad1, redC, color_pulse);
 }
 
 void endGame() {
-  Serial3.print("End Game");
+  //Serial3.print("End Game");
   int nRightAns = countResult();
   playS(END_GAME);
-  delay(2000);
+  delay(5000);
   if (nRightAns == 0)
-    playS(64);
+    //playS(64);
+    startMovement(make_happy1, greenC, color_pulse, 64);
   else if (nRightAns == 1)
-    playS(63);
+    //playS(63);
+    startMovement(make_happy1, greenC, color_pulse, 63);
   else if (nRightAns == 2)
-    playS(62);
+    //playS(62);
+    startMovement(make_happy1, greenC, color_pulse, 62);
   else if (nRightAns > 2)
-    playS(61); // gioco finito
+    startMovement(make_happy1, greenC, color_pulse, 61);
+  //playS(61); // gioco finito
   gameState = no_game;
   interpreterState = choose_game;
 
-  Serial3.print("Correct answers number:"); Serial3.println(nRightAns);
+  //Serial3.print("Correct answers number:"); Serial3.println(nRightAns);
   t_Scenario &s = games[currentGameI].scenarios[currentScenarioI];
 
-  Serial3.println("*G");
+  Serial3.print("*G");
   for (int i = 0; i < s.n_questions - 1; i++) {
     Serial3.print(questionResponseTime[i]); Serial3.print(",");
   }
   Serial3.print(questionResponseTime[s.n_questions - 1]); Serial3.println("*");
 
-  Serial3.println("*H");
+  Serial3.print("*H");
   for (int i = 0; i < s.n_questions - 1; i++) {
     if (givenAnswersReport[i]) Serial3.print("t");
     else Serial3.print("f");

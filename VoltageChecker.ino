@@ -65,8 +65,8 @@ void voltageCheckloop()
     // value
     sample_count = 0;
     sum = 0;
-    if(voltage<=10.0 && millis()-lastWarning>15000){
-      playS(BEEP_AUDIO);
+    if(triskar.isStopped() && voltage<=11.5 && millis()-lastWarning>15000){
+      playS(BATTERIA_SCARICA_AUDIO);
       lastWarning=millis();
     }
 }

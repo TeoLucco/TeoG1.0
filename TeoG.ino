@@ -49,8 +49,8 @@ int fotores_value;
 
 //VOLTAGE CHECKER
 int battery_indicator=0;
-#define MIN_INDICATOR_VOLTAGE 11.0f
-#define MAX_INDICATOR_VOLTAGE 12.5f
+#define MIN_INDICATOR_VOLTAGE 11.5f
+#define MAX_INDICATOR_VOLTAGE 12.7f
 #define MIN_INDICATOR_VALUE 0.0f
 #define MAX_INDICATOR_VALUE 5.0f
 #define BATTERY_UPDATE_TIME 20000
@@ -128,8 +128,8 @@ unsigned long int loopStartTime=0;
 //CAPACITIVES
 #define N_HEAD_SENSORS 4
 #define N_BODY_SENSORS 3
-#define RESET_PAT_TIME 5000
-#define RESET_HIT_TIME 20000
+#define RESET_PAT_TIME 30000
+#define RESET_HIT_TIME 120000
 #define RESET_HUG_TIME 10000
 #define N_PATS 3
 #define N_HITS 3
