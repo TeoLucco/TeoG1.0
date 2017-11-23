@@ -341,7 +341,7 @@ void stopMovement() {
   move = false;
   bodyLedUpdate(led_off);
   headLedUpdate(rainbow_cycle);
-  //stopS();
+  stopS();
   movementFinishTime = millis();
   if (gameState == mov) {
     gameState = wait_answer;
@@ -784,12 +784,12 @@ void makeSad2R() {
 }
 
 
-void makeDance() {
-  rotateRobot(PI / 5.0f, HAPPY_ANGULAR_SP, HAPPY_FORWARD_SP, 0);
-  rotateRobot(-PI / 10.0f, -HAPPY_ANGULAR_SP, HAPPY_FORWARD_SP, 1);
-  if (triskar.getPosTh() >= 2 * PI ) stopMovement();
-  else if (movementI == 2) movementI = 0;
-}
+//void makeDance() {
+//  rotateRobot(PI / 5.0f, HAPPY_ANGULAR_SP, HAPPY_FORWARD_SP, 0);
+//  rotateRobot(-PI / 10.0f, -HAPPY_ANGULAR_SP, HAPPY_FORWARD_SP, 1);
+//  if (triskar.getPosTh() >= 2 * PI ) stopMovement();
+//  else if (movementI == 2) movementI = 0;
+//}
 
 
 float obstacleSeenPosTh = 0;

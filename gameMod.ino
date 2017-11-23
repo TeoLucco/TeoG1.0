@@ -343,21 +343,17 @@ void endGame() {
   //Serial3.print("End Game");
   int nRightAns = countResult();
   playS(END_GAME);
-  delay(5000);
+  delay(4000);
   if (nRightAns == 0)
-    //playS(64);
-    startMovement(make_happy1, greenC, color_pulse, 64);
+    playS(64);
   else if (nRightAns == 1)
-    //playS(63);
-    startMovement(make_happy1, greenC, color_pulse, 63);
+    playS(63);
   else if (nRightAns == 2)
-    //playS(62);
-    startMovement(make_happy1, greenC, color_pulse, 62);
+    playS(62);
   else if (nRightAns > 2)
-    startMovement(make_happy1, greenC, color_pulse, 61);
-  //playS(61); // gioco finito
-  gameState = no_game;
-  interpreterState = choose_game;
+    playS(61); // gioco finito
+  if(digitalRead(BUSY_PIN) == HIGH)
+  gameState = dance;
 
   //Serial3.print("Correct answers number:"); Serial3.println(nRightAns);
   t_Scenario &s = games[currentGameI].scenarios[currentScenarioI];
@@ -414,6 +410,12 @@ boolean color_Game = false;
 //  }
 //}
 
+void makeDance(){
+  startMovement(make_happy1,greenC,color_pulse,136 + rand()%3);
+  interpreterState = choose_game;
+  gameState=no_game;
+}
+
 void gameModality() {
   switch (gameState) {
     case no_game:         break;
@@ -422,6 +424,7 @@ void gameModality() {
     case wait_answer:     waitAnswer(); break;
     case mov:             break;
     case end_game:        endGame(); break;
+    case dance:           makeDance();break;
   }
 }
 
