@@ -125,7 +125,7 @@ void sendSerial() {
 
 void defineWorkingCapacitives() {
   if (interpreterState == fam_modality) {
-    if (actual_movement != autonomous_capa || switchToGameMod) {
+    if (actual_movement != autonomous_capa) {
       if (triskar.isStopped() && actual_movement == no_movement) CapacitivesUpdate(body);
       else CapacitivesUpdate(noOne);
     } else CapacitivesUpdate(body);
