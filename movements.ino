@@ -349,6 +349,26 @@ void stopMovement() {
   }
 }
 
+void stopMovement2() {
+  triskar.stop();
+  //  triskar.setPosTh(0);
+  //  triskar.setPosX(0);
+  //  triskar.setPosY(0);
+  prev_movement3 = no_movement;
+  prev_movement2 = no_movement;
+  prev_movement = no_movement;
+  actual_movement = no_movement;
+  move = false;
+  bodyLedUpdate(led_off);
+  headLedUpdate(rainbow_cycle);
+  stopS();
+  movementFinishTime = millis();
+  if (gameState == mov) {
+    gameState = wait_answer;
+    //CapacitivesUpdate(head);
+  }
+}
+
 //void stopAutFollow() {
 //  aut_mov = false;
 //  follow2 = false;

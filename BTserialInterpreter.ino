@@ -182,13 +182,11 @@ void movementPanel() {
     case '5':
       speed_trg -= 3;
       if (speed_trg < 0)     speed_trg = 0;
-      //Serial3.println("*C" + String(speed_trg) + "*");
       break;
 
     case '6':
       speed_trg += 3;
       if (speed_trg > 45)   speed_trg = 45;
-      //Serial3.println("*C" + String(speed_trg) + "*");
       break;
 
 //    case 'f':
@@ -237,10 +235,10 @@ void settings() {
     case 'd': micro = true; break;
     case 'e': micro = false; break;
     case 'f': microSoglia=Serial3.parseInt();EEPROM.put(microEEPROMADDR, microSoglia); break;
-    case 'l': /*triskar.setKi(SCARED_KI); triskar.setKp(SCARED_KP);*/ bodyLedUpdate(color_pulse, orangeC); speed_trg = SCARED_SPD;/*Serial3.println("*C" + String(speed_trg) + "*");*/ break;
-    case 'm': /*triskar.setKi(HAPPY_KI); triskar.setKp(HAPPY_KP);*/ bodyLedUpdate(color_pulse, greenC); speed_trg = HAPPY_SPD; /*Serial3.println("*C" + String(speed_trg) + "*");*/break;
-    case 'n': /*triskar.setKi(SAD_KI); triskar.setKp(SAD_KP);*/ bodyLedUpdate(color_pulse, blueC); speed_trg = SAD_SPD; /*Serial3.println("*C" + String(speed_trg) + "*");*/break;
-    case 'p': bodyLedUpdate(led_off); speed_trg =35; /*Serial3.println("*C" + String(speed_trg) + "*");*/break;
+    case 'l': bodyLedUpdate(color_pulse, orangeC); speed_trg = SCARED_SPD; break;
+    case 'm': bodyLedUpdate(color_pulse, greenC); speed_trg = HAPPY_SPD; break;
+    case 'n': bodyLedUpdate(color_pulse, blueC); speed_trg = SAD_SPD; break;
+    case 'p': bodyLedUpdate(led_off); speed_trg =35; break;
     case 'g': FAR_DISTANCE=Serial3.parseInt();EEPROM.put(farDistanceEEPROMADDR, FAR_DISTANCE); break;
     case 'h': volume=Serial3.parseInt(); myDFPlayer.volume(volume);break;
   }
@@ -250,7 +248,7 @@ void settings() {
 
 void startMovementBT() {
   switch (b) {
-    case '#': stopMovement();stopMovement(); break;
+    case '#': stopMovement2();break;
     case '9': startMovement(make_circle); break;
     case ':': startMovement(scared_round); break;
     case ';': startMovement(dontwonna); break;
@@ -275,96 +273,16 @@ void startMovementBT() {
 
 
 void playAudio() {
-  //    switch (b) {
-  //      case 'b': playS(9); break;
-  //      case 'c': playS(10); break;
-  //      case 'd': playS(11); break;
-  //      case 'e': playS(12); break;
-  //      case 'f': playS(13); break;
-  //      case 'g': playS(14); break;
-  //      case 'h': playS(15); break;
-  //      case 'i': playS(16); break;
-  //    }
   if (b == '%') {
     playS(Serial3.parseInt());
   }
 }
-//  Serial3.println("7-TRIANGOLO");
-//        if (!triangolo) {
-//          startMovementBT();
-//          triangolo = true;
-//          //startMovement(make_happy[2]);
-//
-//          //CODICE PER ATTIVARE FOLLOWING
-//          //startMovement(follow);
-//          //actual_obstacle=none;
-//          //last_obstacle=none;
-//
-//          //CODICE PER ATTIVARE AUTONOMOUS MOVEMENT
-//          btMov = true; //mi segno che il comando è stato dato da bluetooth, quindi la fotoresistenza non deve intervenire.
-//          if (actual_movement == no_movement || actual_movement == follow || actual_movement == idle) {
-//            Serial3.println("start Autonomous Movement");
-//            startMovement(autonomous_movement);
-//
-//          } else {
-//            Serial3.println("start Following");
-//            stopMovement();
-//            startMovement(follow);
-//            actual_obstacle = none;
-//            last_obstacle = none;
-//          }
-//
-//        }
-//}
-//
-//        Serial3.println("8-QUADRATO");
-//        if (!quadrato) {
-//
-//          quadrato = true;
-//          startMovement(next_movement);
-//          if (next_movement < make_sad2)
-//            next_movement++;
-//          else next_movement = make_circle;
-//        }
 
-//
-//      case '9':
-//        Serial3.println("9-X");
-//        if (!croce) {
-//
-//          croce = true;
-//          startMovement(make_happy2);
-//          //startMovement(makeCircle);
-//          //startMovement(angrymov);
-//        }
-//        break;
-//      case 'A':
-//        Serial3.println("A-CERCHIO");
-//        if (!cerchio) {
-//          cerchio = true;
-//
-//          //startMovement(make_happy[3]);
-//          //CODICE PER DISATTIVARE FOLLOWING E AUTONOMOUS MOVEMENT
-//          btMov = false;
-//          stopAutFollow();
-//
-//          //CODICE PER DISATTIVARE AUTONOMOUS MOVEMENT
-//          /* autonomous_movement=false;
-//            move=false;
-//            aut=false;*/
-//        }
-//        break;
-//      default:
-//        // default code (should never run)
-//        break;
 
 void sendState() {//send data from arduino to App
   Serial3.println("*A" + String(interpreterState) + "*");
-//  if (millis() - lastBatteryUpdate > BATTERY_UPDATE_TIME && triskar.isStopped()) {
   battery_indicator = constrain(mapfloat(voltage, MIN_INDICATOR_VOLTAGE, MAX_INDICATOR_VOLTAGE, MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE), MIN_INDICATOR_VALUE, MAX_INDICATOR_VALUE);
   Serial3.println("*B" + String(battery_indicator) + "*");
-//    lastBatteryUpdate = millis();
-//  }
   Serial3.println("*C" + String(speed_trg) + "*");
   Serial3.println("*D" + String(f_front) + "*");
   Serial3.println("*L" + String(f_left) + "*");

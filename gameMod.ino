@@ -13,10 +13,6 @@ struct Scenario {
   int n_questions;
   int audio_indices[maxQuestionsPerEx] ;
   bool correct_answers[maxQuestionsPerEx][N_HEAD_SENSORS];
-  //  int n_answers[maxQuestionsPerEx];
-  //  unsigned long int questionResponseTime[maxQuestionsPerEx];
-  //  boolean givenAnswersReport[maxQuestionsPerEx];
-
   String Id;
 };
 
