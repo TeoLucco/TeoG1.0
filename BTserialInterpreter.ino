@@ -186,7 +186,7 @@ void movementPanel() {
 
     case '6':
       speed_trg += 3;
-      if (speed_trg > 45)   speed_trg = 45;
+      if (speed_trg > 51)   speed_trg = 51;
       break;
 
 //    case 'f':
@@ -235,12 +235,13 @@ void settings() {
     case 'd': micro = true; break;
     case 'e': micro = false; break;
     case 'f': microSoglia=Serial3.parseInt();EEPROM.put(microEEPROMADDR, microSoglia); break;
-    case 'l': bodyLedUpdate(color_pulse, orangeC); speed_trg = SCARED_SPD; break;
-    case 'm': bodyLedUpdate(color_pulse, greenC); speed_trg = HAPPY_SPD; break;
-    case 'n': bodyLedUpdate(color_pulse, blueC); speed_trg = SAD_SPD; break;
-    case 'p': bodyLedUpdate(led_off); speed_trg =35; break;
     case 'g': FAR_DISTANCE=Serial3.parseInt();EEPROM.put(farDistanceEEPROMADDR, FAR_DISTANCE); break;
     case 'h': volume=Serial3.parseInt(); myDFPlayer.volume(volume);break;
+    case 'i': bodyLedUpdate(color_pulse, orangeC); speed_trg = SCARED_SPD; break;
+    case 'j': bodyLedUpdate(color_pulse, greenC); speed_trg = HAPPY_SPD; break;
+    case 'k': bodyLedUpdate(color_pulse, blueC); speed_trg = SAD_SPD; break;
+    case 'l': bodyLedUpdate(led_off); speed_trg =35; break;
+   
   }
 }
 
@@ -265,9 +266,9 @@ void startMovementBT() {
     case 'F': stopMovement(); startMovement(follow); actual_obstacle = none; last_obstacle = none; break;
     case 'G': stopMovement(); startMovement(autonomous_movement); break;
     case 'H': stopMovement(); startMovement(autonomous_capa); break; //START DI MOSCACIECA
-    case 'I': stopMovement(); startMovement(brokeIce); break;
-    case 'J': stopMovement(); startMovement(dance_mov); break;
-    case 'K': stopMovement(); startMovement(colorGame); break;
+//    case 'I': stopMovement(); startMovement(brokeIce); break;
+//    case 'J': stopMovement(); startMovement(dance_mov); break;
+//    case 'K': stopMovement(); startMovement(colorGame); break;
   }
 }
 
@@ -288,11 +289,11 @@ void sendState() {//send data from arduino to App
   Serial3.println("*L" + String(f_left) + "*");
   Serial3.println("*R" + String(f_right) + "*");
   Serial3.println("*S" + String(f_back) + "*");
-  Serial3.println("*F" + String(fotores_value) + "*");
   Serial3.println("*M" + String(micro_f) + "*");
   Serial3.println("*g" + String(microSoglia) + "*");
   Serial3.println("*s" + String(FAR_DISTANCE) + "*");
   Serial3.println("*t" + String(volume) + "*");
+//  Serial3.println("*F" + String(fotores_value) + "*");
 //  Serial3.println("*Q" + String(triskar.getSpeedX()) + "*");
 //  Serial3.println("*N" + String(actual_movement) + "*");
 //  Serial3.println("*O" + String(prev_movement) + "*");
