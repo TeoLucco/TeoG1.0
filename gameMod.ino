@@ -369,7 +369,8 @@ void endGame() {
   if (givenAnswersReport[s.n_questions - 1]) Serial3.print("t");
   else Serial3.print("f");
   Serial3.println("*");
-
+  currentGameI=-1;
+  currentScenarioI=-1;
 }
 
 int countResult() {
