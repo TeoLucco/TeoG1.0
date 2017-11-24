@@ -69,7 +69,7 @@ void chooseGameCap() {
     case 0:
       if (currentGameI < N_GAMES) currentGameI++;
       else currentGameI = N_GAMES;
-      playS(currentGameI);
+      playS(currentGameI+1);
       break;
 
     case 1:break;
@@ -77,11 +77,11 @@ void chooseGameCap() {
     case 2:break;
 
     case 3:
-      if(currentGameI>0){
+      if(currentGameI>=0){
       interpreterState = choose_scenario;
       playS(you_choosed_game_audio);
       delay(2000);
-      playS(currentGameI);
+      playS(currentGameI+1);
       delay(1500);
       playS(choose_scenario_audio);
       } //scegli scenario
@@ -96,7 +96,7 @@ void chooseScenarioCap() {
     case 0: 
       if (currentScenarioI < N_GAMES) currentScenarioI++;
       else currentScenarioI = N_GAMES;
-      playS(currentScenarioI);
+      playS(currentScenarioI+1);
       break;
       
 
@@ -109,11 +109,11 @@ void chooseScenarioCap() {
      
 
     case 3:
-      if(currentScenarioI>0){
+      if(currentScenarioI>=0){
       interpreterState = sg_waiting;
       playS(you_choosed_scenario_audio);
       delay(2000);
-      playS(currentScenarioI);
+      playS(currentScenarioI+1);
       delay(1500);
       playS(put_patches_audio);
       } //scegli scenario

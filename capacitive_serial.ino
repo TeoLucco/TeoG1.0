@@ -60,8 +60,8 @@ void patRecived() {
     } else  if(actual_movement!=autonomous_capa && prev_movement!=autonomous_capa && prev_movement2!=autonomous_capa && prev_movement3!=autonomous_capa){
       if (pats >= N_PATS) {
         //resetPats();
-        timedPlayS(N_PATS_AUDIO, 5000);
-        bodyLedUpdate(color_wipe, lightBlueC, 2000);
+        timedPlayS(N_PATS_AUDIO, 30000);
+        bodyLedUpdate(color_wipe, lightBlueC);
         //        setLedTimer(2000);
         //        bodyLedUpdate(color_wipe, lightBlueC);
       } else {
@@ -69,7 +69,7 @@ void patRecived() {
           pat[i]++;
           pats++;
         }
-        timedPlayS(PATS_AUDIO1 + rand() % 2, 5000);
+        playS(PATS_AUDIO1 + rand() % 2);
         bodyLedUpdate(color_wipe, lightBlueC, 2000);
         //        setLedTimer(2000);
         //        bodyLedUpdate(color_wipe, lightBlueC);
@@ -89,7 +89,7 @@ void hitRecived() {
     //Serial3.print("hit at "); Serial3.println(i);
     setTouched(i);
     if (hits >= N_HITS) {
-      resetHits();
+      //resetHits();
       nhits(i);
     } else {
       hit[i]++;

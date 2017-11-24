@@ -119,8 +119,8 @@ DFRobotDFPlayerMini myDFPlayer;
 #define N_GAMES 3
 enum gameStates {no_game, setting, make_question, wait_answer, right_answer, wrong_answer, end_game, mov, dance};
 gameStates gameState = no_game;
-int currentGameI=0;
-int currentScenarioI=0;
+int currentGameI=-1;
+int currentScenarioI=-1;
 
 //0-blu 1-giallo 2-verde 3-rosso
 unsigned long int startWaitingTime = 0;
