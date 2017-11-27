@@ -91,14 +91,13 @@ void famMod() {
 void headButtonsControl() {
   if (b == '!') {
     buttonToTouch = Serial3.parseInt();
-    CapacitivesUpdate(both);
     //Serial3.print("buttonToTouch: ");Serial3.println(buttonToTouch);
   }
 }
 
 void movementPanel() {
   switch (b) {
-    case '0':
+    case '8':
       //resetButtons();
       if (actual_movement == no_movement) {
         if (prev_movement != autonomous_capa && prev_movement != follow && prev_movement != autonomous_movement) {

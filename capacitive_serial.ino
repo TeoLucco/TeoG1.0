@@ -34,13 +34,13 @@ void hugRecived() {
     lastHugRecivedTime = millis();
     touch_type = hugT;
     //Serial3.print("Abbraccio durata "); Serial3.println(abbraccioN);
-    if(actual_movement!=autonomous_capa && prev_movement!=autonomous_capa && prev_movement2!=autonomous_capa && prev_movement3!=autonomous_capa){
-    timedPlayS(HUG_AUDIO, 10000);
-    bodyLedUpdate(color_pulse, redC, 4000);
-    //    setLedTimer(4000);
-    //    bodyLedUpdate(color_pulse, redC);
-    resetPats();
-    resetHits();
+    if (actual_movement != autonomous_capa && prev_movement != autonomous_capa && prev_movement2 != autonomous_capa && prev_movement3 != autonomous_capa) {
+      timedPlayS(HUG_AUDIO, 10000);
+      bodyLedUpdate(color_pulse, redC, 4000);
+      //    setLedTimer(4000);
+      //    bodyLedUpdate(color_pulse, redC);
+      resetPats();
+      resetHits();
     }
   }
 }
@@ -57,7 +57,7 @@ void patRecived() {
     if (switchToGameMod && i == 2) {
       switchToGameMod = false;
       interpreterState = game_modality;
-    } else  if(actual_movement!=autonomous_capa && prev_movement!=autonomous_capa && prev_movement2!=autonomous_capa && prev_movement3!=autonomous_capa){
+    } else  if (actual_movement != autonomous_capa && prev_movement != autonomous_capa && prev_movement2 != autonomous_capa && prev_movement3 != autonomous_capa) {
       if (pats >= N_PATS) {
         //resetPats();
         timedPlayS(N_PATS_AUDIO, 30000);
@@ -115,7 +115,7 @@ void sendSerial() {
     switch (workingCapacitives) {
       case noOne: Serial.write(0); break;
       case head: Serial.write(1); break;
-      case body: Serial.write(2); if(actual_movement==autonomous_capa)Serial.write(4);else Serial.write(5); break;
+      case body: Serial.write(2); if (actual_movement == autonomous_capa)Serial.write(4); else Serial.write(5); break;
       case both: Serial.write(3); break;
     }
     //Serial3.println("*E" + String(workingCapacitives) + "*");
@@ -126,9 +126,15 @@ void sendSerial() {
 void defineWorkingCapacitives() {
   if (interpreterState == fam_modality) {
     if (actual_movement != autonomous_capa) {
-      if (triskar.isStopped() && actual_movement == no_movement) CapacitivesUpdate(body);
-      else CapacitivesUpdate(noOne);
-    } else CapacitivesUpdate(body);
+      if (buttonToTouch != -1) {
+        if (triskar.isStopped() && actual_movement == no_movement) CapacitivesUpdate(both);
+        else CapacitivesUpdate(noOne);
+      }
+      else {
+        if (triskar.isStopped() && actual_movement == no_movement) CapacitivesUpdate(body);
+        else CapacitivesUpdate(noOne);
+      } 
+    }else CapacitivesUpdate(body);
   } else if (interpreterState == choose_game || interpreterState == choose_scenario || interpreterState == choose_modality || interpreterState == sg_waiting) {
     if (headInterpreter) CapacitivesUpdate(head);
     else CapacitivesUpdate(noOne);
@@ -140,7 +146,7 @@ void defineWorkingCapacitives() {
 
 void nhits(int i) {
   CapacitivesUpdate(noOne); //DA TESTARE(DOVREBBE ESSERE RIDONDANTE)
-  if(actual_movement!=autonomous_capa && prev_movement!=autonomous_capa && prev_movement2!=autonomous_capa && prev_movement3!=autonomous_capa){
+  if (actual_movement != autonomous_capa && prev_movement != autonomous_capa && prev_movement2 != autonomous_capa && prev_movement3 != autonomous_capa) {
     switch (i) {
       case 0: alpha = 0.70 * PI; startMovement(make_sad2L, redCrazy, color_wipe, N_HIT_AUDIO); break;
       case 1: alpha = 0.70 * PI; startMovement(make_sad2R, redCrazy, color_wipe, N_HIT_AUDIO); break;
@@ -152,7 +158,7 @@ void nhits(int i) {
 
 void hitRecived(int i) {
   CapacitivesUpdate(noOne); //DA TESTARE(DOVREBBE ESSERE RIDONDANTE)
-  if(actual_movement!=autonomous_capa && prev_movement!=autonomous_capa && prev_movement2!=autonomous_capa && prev_movement3!=autonomous_capa){
+  if (actual_movement != autonomous_capa && prev_movement != autonomous_capa && prev_movement2 != autonomous_capa && prev_movement3 != autonomous_capa) {
     switch (i) {
       case 0: alpha = 0.70 * PI; startMovement(scared_hitL, orangeC, color_wipe, HIT_AUDIO); break;
       case 1: alpha = 0.70 * PI; startMovement(scared_hitR, orangeC, color_wipe, HIT_AUDIO); break;
