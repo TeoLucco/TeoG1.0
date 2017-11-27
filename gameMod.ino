@@ -408,9 +408,9 @@ boolean color_Game = false;
 //}
 
 void makeDance(){
-  startMovement(make_happy1,greenC,color_pulse,136 + rand()%3);
-  interpreterState = choose_game;
-  gameState=no_game;
+  startMovement(make_dance,greenC,color_pulse,136 + rand()%3);
+//  interpreterState = choose_game;
+//  gameState=no_game;
 }
 
 void gameModality() {

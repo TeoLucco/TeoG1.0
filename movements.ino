@@ -34,7 +34,7 @@ void iMfollowingU() {
       triskar.run(mapfloat(actual_distance, 0, 400, 0, 40.0), 0.0);
     }
   } else {
-   
+
     if ((back_obstacle == closeOb || back_obstacle == veryCloseOb)  && millis() - lastround > 10000 && actual_distance == previous_distance && backI >= 3 && triskar.isStopped() && actual_obstacle != none) {
       lastround = millis();
       //stopMovement();
@@ -221,13 +221,12 @@ void autonomousMovement() {
 
 
 void autonomousMovementWithCapacitors() {
-  
+
   if (touched == leftT) {
     alpha = (2 * PI) / 3; startMovement(turnAlphaL4);
   } else if (touched == rightT) {
     alpha = (2 * PI) / 3; startMovement(turnAlphaR4);
-  } else 
-     if (millis() - movStartTime >= randomTurnTime) {//Turn randomly left/right 90 degrees at random time
+  } else if (millis() - movStartTime >= randomTurnTime) { //Turn randomly left/right 90 degrees at random time
     alpha = PI / 2;
     //stopMovement();
     if (dir == 1) {
@@ -341,11 +340,14 @@ void stopMovement() {
   move = false;
   bodyLedUpdate(led_off);
   headLedUpdate(rainbow_cycle);
-  stopS();
+  //stopS();
   movementFinishTime = millis();
   if (gameState == mov) {
     gameState = wait_answer;
     //CapacitivesUpdate(head);
+  }else if(gameState==dance){
+    interpreterState = choose_game;
+    gameState=no_game;
   }
 }
 
@@ -389,8 +391,7 @@ void obstacle_stop_movement() {
       actual_movement = no_movement;
       startMovement(makeOnemF, redC, color_pulse);
     }
-  }else 
-  if (actual_movement != dontwonna && actual_movement != follow && actual_movement != autonomous_movement && actual_movement != turnAlphaR && actual_movement != turnAlphaL && actual_movement != make_sad0 && actual_movement != turnAlphaR4 && actual_movement != turnAlphaL4 && actual_movement != autonomous_capa) {
+  } else if (actual_movement != dontwonna && actual_movement != follow && actual_movement != autonomous_movement && actual_movement != turnAlphaR && actual_movement != turnAlphaL && actual_movement != make_sad0 && actual_movement != turnAlphaR4 && actual_movement != turnAlphaL4 && actual_movement != autonomous_capa) {
     if ( (triskar.getDirection() == 1) && (front_obstacle == veryCloseOb || left_obstacle == veryCloseOb || right_obstacle == veryCloseOb) ) {
       actual_movement = no_movement;
       startMovement(dontwonna, redC, color_pulse, DONT_WONNA_AUDIO1 + rand() % 3);
@@ -445,7 +446,7 @@ void turn_alpha_left_test2() {
     //stopMovement();
     followingStartTime = millis();
     startMovement(follow);
-    actual_obstacle = none; 
+    actual_obstacle = none;
     last_obstacle = none;
   }
 }
@@ -494,7 +495,7 @@ void turn_alpha_right_test2() {
     //stopMovement();
     followingStartTime = millis();
     startMovement(follow);
-    actual_obstacle = none; 
+    actual_obstacle = none;
     last_obstacle = none;
   }
 }
@@ -577,46 +578,12 @@ boolean flag = true;
 void makeRunScaredHit() { //at the end of the scared movement the robot will go in the opposite direction in line way like makeonemF
   traslateRobot( -100.0, -SCARED_FORWARD_SP, 0.0, 0);
   stopRobot(1);
-  traslateRobot( -95.0, SCARED_FORWARD_SP, 0.0, 2);
-  stopRobot(3);
-  traslateRobot( -90.0, SCARED_FORWARD_SP, 0.0, 4);
-  stopRobot(5);
-  traslateRobot( -85.0, SCARED_FORWARD_SP, 0.0, 5);
-  stopRobot(6);
-  traslateRobot( -80.0, SCARED_FORWARD_SP, 0.0, 7);
-  stopRobot(8);
-  traslateRobot( -75.0, SCARED_FORWARD_SP, 0.0, 9);
-  stopRobot(10);
-  traslateRobot( -70.0, SCARED_FORWARD_SP, 0.0, 11);
-  stopRobot(12);
-  traslateRobot( -65.0, SCARED_FORWARD_SP, 0.0, 13);
-  stopRobot(14);
-  traslateRobot( -60.0, SCARED_FORWARD_SP, 0.0, 15);
-  stopRobot(16);
-  traslateRobot( -55.0, SCARED_FORWARD_SP, 0.0, 17);
-  stopRobot(18);
-  traslateRobot( -50.0, SCARED_FORWARD_SP, 0.0, 19);
-  stopRobot(20);
-  traslateRobot( -45.0, SCARED_FORWARD_SP, 0.0, 21);
-  stopRobot(22);
-  traslateRobot( -40.0, SCARED_FORWARD_SP, 0.0, 23);
-  stopRobot(24);
-  traslateRobot( -35.0, SCARED_FORWARD_SP, 0.0, 25);
-  stopRobot(26);
-  traslateRobot( -30.0, SCARED_FORWARD_SP, 0.0, 27);
-  stopRobot(28);
-  traslateRobot( -25.0, SCARED_FORWARD_SP, 0.0, 29);
-  stopRobot(30);
-  traslateRobot( -20.0, SCARED_FORWARD_SP, 0.0, 31);
-  stopRobot(32);
-  traslateRobot( -15.0, SCARED_FORWARD_SP, 0.0, 33);
-  stopRobot(34);
-  traslateRobot( -10.0, SCARED_FORWARD_SP, 0.0, 35);
-  stopRobot(36);
-  traslateRobot( -5.0, SCARED_FORWARD_SP, 0.0, 37);
-  stopRobot(38);
-  traslateRobot( 0.0, SCARED_FORWARD_SP, 0.0, 39);
-  stopMovement(40);
+  traslateRobot( -70.0, SCARED_FORWARD_SP, 0.0, 2);
+  stopRobotTimer(3,2000);
+  traslateRobot( -40.0, SCARED_FORWARD_SP, 0.0, 4);
+  stopRobotTimer(5,1000);
+  traslateRobot( 0.0, SCARED_FORWARD_SP, 0.0, 5);
+  stopMovement(6);
 }
 
 void makeRunScaredHitL() { //at the end of the scared movement the robot will go in the opposite direction in line way like makeonemF
@@ -624,20 +591,10 @@ void makeRunScaredHitL() { //at the end of the scared movement the robot will go
   stopRobot(1);
   rotateRobot(- alpha , -SCARED_ANGULAR_SP, 0.0, 2);
   stopRobot2(3);
-  traslateRobot( 5.0, SCARED_FORWARD_SP, 0.0, 4);
-  stopRobot(5);
-  traslateRobot( 10.0, SCARED_FORWARD_SP, 0.0, 6);
-  stopRobot(7);
-  traslateRobot( 15.0, SCARED_FORWARD_SP, 0.0, 8);
-  stopRobot(9);
-  traslateRobot( 20.0, SCARED_FORWARD_SP, 0.0, 10);
-  stopRobot(11);
-  traslateRobot( 25.0, SCARED_FORWARD_SP, 0.0, 12);
-  stopRobot(13);
-  traslateRobot( 35.0, SAD_FORWARD_SP, 0.0, 14);
-  stopRobot(15);
-  traslateRobot( 40.0, SAD_FORWARD_SP, 0.0, 16);
-  stopMovement(17);
+  traslateRobot( 10.0, SCARED_FORWARD_SP, 0.0, 4);
+  stopRobotTimer(5,2000);
+  traslateRobot( 40.0, SCARED_FORWARD_SP, 0.0, 6);
+  stopMovement(7);
 }
 
 void makeRunScaredHitR() { //at the end of the scared movement the robot will go in the opposite direction in line way like makeonemF
@@ -645,20 +602,10 @@ void makeRunScaredHitR() { //at the end of the scared movement the robot will go
   stopRobot(1);
   rotateRobot( alpha , SCARED_ANGULAR_SP, 0.0, 2);
   stopRobot2(3);
-  traslateRobot( 5.0, SCARED_FORWARD_SP, 0.0, 4);
-  stopRobot(5);
-  traslateRobot( 10.0, SCARED_FORWARD_SP, 0.0, 6);
-  stopRobot(7);
-  traslateRobot( 15.0, SCARED_FORWARD_SP, 0.0, 8);
-  stopRobot(9);
-  traslateRobot( 20.0, SCARED_FORWARD_SP, 0.0, 10);
-  stopRobot(11);
-  traslateRobot( 25.0, SCARED_FORWARD_SP, 0.0, 12);
-  stopRobot(13);
-  traslateRobot( 35.0, SAD_FORWARD_SP, 0.0, 14);
-  stopRobot(15);
-  traslateRobot( 40.0, SAD_FORWARD_SP, 0.0, 16);
-  stopMovement(17);
+  traslateRobot( 10.0, SCARED_FORWARD_SP, 0.0, 4);
+  stopRobot(5,2000);
+  traslateRobot( 40.0, SCARED_FORWARD_SP, 0.0, 6);
+  stopMovement(7);
 }
 
 void scaredRunBasicBR(int i) {
@@ -683,11 +630,11 @@ void makeHappy0() {
   rotateRobot( 2.0 * PI , HAPPY_ANGULAR_SP, 0.0f, 0);
   rotateRobot( 0.0 , -HAPPY_ANGULAR_SP, 0.0f, 1);
   stopMovement(2);
-  
-//  scaredRunBasicBR(0);
-//  stopRobot(5);
-//  makeRunScaredForward(6);
-//  stopMovement(11);
+
+  //  scaredRunBasicBR(0);
+  //  stopRobot(5);
+  //  makeRunScaredForward(6);
+  //  stopMovement(11);
 
   //  rotateRobot( PI / 12.0 ,  HAPPY_ANGULAR_SP, -HAPPY_FORWARD_SP, 0);
   //  rotateRobot( - PI / 12.0 ,  -HAPPY_ANGULAR_SP, -HAPPY_FORWARD_SP, 1);
@@ -730,8 +677,8 @@ void makeHappy1() {
 }
 
 void makeHappy2() {
-  rotateRobot( PI/2 , HAPPY_ANGULAR_SP, 0.0f, 0);
-  rotateRobot( -PI/2 , -HAPPY_ANGULAR_SP, 0.0f, 1);
+  rotateRobot( PI / 2 , HAPPY_ANGULAR_SP, 0.0f, 0);
+  rotateRobot( -PI / 2 , -HAPPY_ANGULAR_SP, 0.0f, 1);
   rotateRobot( 0.0 , HAPPY_ANGULAR_SP, 0.0f, 2);
   stopMovement(3);
 }
@@ -741,7 +688,7 @@ void makeHappy3() {
   stopRobot(5);
   makeRunScaredForward(6);
   stopMovement(11);
- 
+
 }
 
 void makeSad0() {
@@ -810,6 +757,8 @@ void makeSad2R() {
 //  if (triskar.getPosTh() >= 2 * PI ) stopMovement();
 //  else if (movementI == 2) movementI = 0;
 //}
+
+
 
 
 float obstacleSeenPosTh = 0;
@@ -891,6 +840,30 @@ void makeBeAngry() {
   stopMovement(5);
 }
 
+void Dance() {
+  rotateRobot( PI / 4,  HAPPY_ANGULAR_SP, 0.0f, 0);
+  rotateRobot( PI / 4 - PI / 9,  -SCARED_ANGULAR_SP, 0.0f, 1);
+  rotateRobot( PI / 4 , SCARED_ANGULAR_SP, 0.0f, 2);
+  rotateRobot( - PI / 4, -HAPPY_ANGULAR_SP, 0.0f, 3);
+  rotateRobot( - PI / 4 + PI / 9, SCARED_ANGULAR_SP, 0.0f, 4);
+  rotateRobot( - PI / 4, -SCARED_ANGULAR_SP, 0.0f, 5);
+  rotateRobot( PI / 4,  HAPPY_ANGULAR_SP, 0.0f, 6);
+  rotateRobot( PI / 4 - PI / 9,  -SCARED_ANGULAR_SP, 0.0f, 7);
+  rotateRobot( PI / 4 , SCARED_ANGULAR_SP, 0.0f, 8);
+  rotateRobot( - PI / 4, -HAPPY_ANGULAR_SP, 0.0f, 9);
+  rotateRobot( - PI / 4 + PI / 9, SCARED_ANGULAR_SP, 0.0f, 10);
+  rotateRobot( - PI / 4, -SCARED_ANGULAR_SP, 0.0f, 11);
+  rotateRobot( PI / 4,  HAPPY_ANGULAR_SP, 0.0f, 12);
+  rotateRobot( PI / 4 - PI / 9,  -SCARED_ANGULAR_SP, 0.0f, 13);
+  rotateRobot( PI / 4 , SCARED_ANGULAR_SP, 0.0f, 14);
+  rotateRobot( - PI / 4, -HAPPY_ANGULAR_SP, 0.0f, 15);
+  rotateRobot( - PI / 4 + PI / 9, SCARED_ANGULAR_SP, 0.0f, 16);
+  rotateRobot( - PI / 4, -SCARED_ANGULAR_SP, 0.0f, 17);
+  rotateRobot( 0.0, HAPPY_ANGULAR_SP, 0.0f, 18);
+  stopMovement(19);
+  
+}
+
 
 
 void traslateRobot(float dX, float speedX, float speedTh, int I) {
@@ -923,6 +896,15 @@ void stopRobot(int i) {
     triskar.stop3();
     movementI = i + 1;
   }
+}
+unsigned long int stopTime=0;
+void stopRobotTimer(int i,unsigned long int timer) {
+  if (movementI == i) {
+    triskar.stop3();
+    stopTime=millis();
+  }
+  if(millis()-stopTime>timer)
+  movementI = i + 1;
 }
 
 void stopRobot2(int i) {
@@ -980,9 +962,9 @@ void makeMovement() {
         case idle:                idleMovement(); break;
       */
       case follow:              iMfollowingU(); break;
-        /* case colorGame:           color_game(); break;
-          case dance_mov:           makeDance(); break;
-        */
+      /* case colorGame:           color_game(); break;
+    */  case make_dance:           Dance(); break;
+        * /
     }
     obstacle_stop_movement();
   }//else switchToIdle();
