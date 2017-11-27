@@ -258,7 +258,7 @@ boolean move = false;
 #define scared_hitL         24
 #define scared_hitR         25
 #define angrymov            26
-#define dance_mov           27
+#define make_dance          27
 #define idle                28
 #define follow              29
 #define autonomous_movement 30

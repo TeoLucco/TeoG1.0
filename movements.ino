@@ -603,7 +603,7 @@ void makeRunScaredHitR() { //at the end of the scared movement the robot will go
   rotateRobot( alpha , SCARED_ANGULAR_SP, 0.0, 2);
   stopRobot2(3);
   traslateRobot( 10.0, SCARED_FORWARD_SP, 0.0, 4);
-  stopRobot(5,2000);
+  stopRobotTimer(5,2000);
   traslateRobot( 40.0, SCARED_FORWARD_SP, 0.0, 6);
   stopMovement(7);
 }
@@ -963,8 +963,8 @@ void makeMovement() {
       */
       case follow:              iMfollowingU(); break;
       /* case colorGame:           color_game(); break;
-    */  case make_dance:           Dance(); break;
-        * /
+    */  
+      case make_dance:           Dance(); break;
     }
     obstacle_stop_movement();
   }//else switchToIdle();
