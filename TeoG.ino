@@ -12,7 +12,7 @@
 #include <EEPROM.h>
 
 
-#define WAIT_BT_CONN 60000
+#define WAIT_BT_CONN 150000
 unsigned long int firstSoundTime = 0;
 #define TIME_TO_SETUP 5000
 //#define switchToIdleTime 15000
