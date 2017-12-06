@@ -382,7 +382,7 @@ void stopMovement2() {
 
 
 void obstacle_stop_movement() {
-  if (actual_movement == scared_hit || actual_movement == scared_hitR || actual_movement == scared_hitL || actual_movement == make_sad2 || actual_movement == make_sad2L || actual_movement == make_sad2R) {
+  if (actual_movement == scared_hit || actual_movement == scared_hitR || actual_movement == scared_hitL || actual_movement == make_sad2 || actual_movement == make_sad2L || actual_movement == make_sad2R || actual_movement == make_sad0) {
     if ( (triskar.getDirection() == 1) && (front_obstacle == veryCloseOb || left_obstacle == veryCloseOb || right_obstacle == veryCloseOb) ) {
       actual_movement = no_movement;
       startMovement(dontwonna, redC, color_pulse);
@@ -391,7 +391,7 @@ void obstacle_stop_movement() {
       actual_movement = no_movement;
       startMovement(makeOnemF, redC, color_pulse);
     }
-  } else if (actual_movement != dontwonna && actual_movement != follow && actual_movement != autonomous_movement && actual_movement != turnAlphaR && actual_movement != turnAlphaL && actual_movement != make_sad0 && actual_movement != turnAlphaR4 && actual_movement != turnAlphaL4 && actual_movement != autonomous_capa) {
+  } else if (actual_movement != dontwonna && actual_movement != follow && actual_movement != autonomous_movement && actual_movement != turnAlphaR && actual_movement != turnAlphaL && actual_movement != turnAlphaR4 && actual_movement != turnAlphaL4 && actual_movement != autonomous_capa) {
     if ( (triskar.getDirection() == 1) && (front_obstacle == veryCloseOb || left_obstacle == veryCloseOb || right_obstacle == veryCloseOb) ) {
       actual_movement = no_movement;
       startMovement(dontwonna, redC, color_pulse, DONT_WONNA_AUDIO1 + rand() % 3);
@@ -706,8 +706,7 @@ void makeSad1() {
   rotateRobot( PI / 40.0, SAD_ANGULAR_SP, 0.0f, 2);
   rotateRobot( - PI / 40.0, -SAD_ANGULAR_SP, 0.0f, 3);
   rotateRobot( 0.0f, SAD_ANGULAR_SP, 0.0f, 4);
-  if (prev_movement == follow && movementI == 5) startMovement(follow);
-  else stopMovement(5);
+  stopMovement(5);
 }
 
 

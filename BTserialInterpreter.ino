@@ -249,19 +249,24 @@ void settings() {
 void startMovementBT() {
   switch (b) {
     case '#': stopMovement2();break;
+    
     case '9': startMovement(make_circle); break;
     case ':': startMovement(scared_round); break;
-    case ';': startMovement(dontwonna); break;
     case '<': startMovement(scared_behind); break;
+    case 'C': startMovement(scared_hit); break;
+    case 'D': startMovement(make_sad2); break;
+    
+    case ';': startMovement(dontwonna); break;
+    case 'A': startMovement(make_sad0); break;
+    case 'B': startMovement(make_sad1); break;
+
+    case 'E': startMovement(angrymov); break;
+    
     case '=': startMovement(make_happy0); break;
     case '>': startMovement(make_happy1); break;
     case '?': startMovement(make_happy2); break;
     case '@': startMovement(make_happy3); break;
-    case 'A': startMovement(make_sad0); break;
-    case 'B': startMovement(make_sad1); break;
-    case 'C': startMovement(scared_hit); break;
-    case 'D': startMovement(make_sad2); break;
-    case 'E': startMovement(angrymov); break;
+    
     case 'F': stopMovement(); startMovement(follow); actual_obstacle = none; last_obstacle = none; break;
     case 'G': stopMovement(); startMovement(autonomous_movement); break;
     case 'H': stopMovement(); startMovement(autonomous_capa); break; //START DI MOSCACIECA

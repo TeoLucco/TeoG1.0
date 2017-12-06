@@ -151,7 +151,7 @@ void nhits(int i) {
       case 0: alpha = 0.70 * PI; startMovement(make_sad2L, redCrazy, color_wipe, N_HIT_AUDIO); break;
       case 1: alpha = 0.70 * PI; startMovement(make_sad2R, redCrazy, color_wipe, N_HIT_AUDIO); break;
       case 2: startMovement(make_sad2, redCrazy, color_wipe, N_HIT_AUDIO); break;
-      case 3: startMovement(angrymov, redCrazy, color_wipe, N_HIT_AUDIO); break;
+      case 3: /*startMovement(angrymov, redCrazy, color_wipe, N_HIT_AUDIO);*/ break;
     }
   }
 }
