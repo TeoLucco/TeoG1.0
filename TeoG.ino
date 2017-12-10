@@ -143,7 +143,7 @@ touched_parts touched = noWhere;
 enum touch_types {nothing, hugT, patT, hitT};
 touch_types touch_type = nothing;
 int pressedButton = -1;
-int buttonToTouch=-1;
+//int buttonToTouch=-1;
 boolean headInterpreter = false;
 int pat[N_BODY_SENSORS] = {0, 0, 0};
 int hit[N_BODY_SENSORS+1] = {0, 0, 0, 0};

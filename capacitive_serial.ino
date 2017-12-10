@@ -125,15 +125,9 @@ void sendSerial() {
 
 void defineWorkingCapacitives() {
   if (interpreterState == fam_modality) {
-    if (actual_movement != autonomous_capa) {
-      if (buttonToTouch != -1) {
-        if (triskar.isStopped() && actual_movement == no_movement) CapacitivesUpdate(both);
-        else CapacitivesUpdate(noOne);
-      }
-      else {
+    if (actual_movement != autonomous_capa) {   
         if (triskar.isStopped() && actual_movement == no_movement) CapacitivesUpdate(body);
-        else CapacitivesUpdate(noOne);
-      } 
+        else CapacitivesUpdate(noOne);     
     }else CapacitivesUpdate(body);
   } else if (interpreterState == choose_game || interpreterState == choose_scenario || interpreterState == choose_modality || interpreterState == sg_waiting) {
     if (headInterpreter) CapacitivesUpdate(head);

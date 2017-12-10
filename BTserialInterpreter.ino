@@ -76,7 +76,7 @@ void famMod() {
     startMovementBT();
     settings();
     playAudio();
-    headButtonsControl();
+    //headButtonsControl();
     switch (b) {
       case '.': interpreterState = choose_modality; loopStartTime = millis(); break;
       case'(': interpreterState = choose_game; playS(game_mod_audio); delay(2000); playS(CHOOSE_GAME_AUDIO);
@@ -87,12 +87,12 @@ void famMod() {
   sendState();
 }
 
-void headButtonsControl() {
-  if (b == '!') {
-    buttonToTouch = Serial3.parseInt();
-    //Serial3.print("buttonToTouch: ");Serial3.println(buttonToTouch);
-  }
-}
+//void headButtonsControl() {
+//  if (b == '!') {
+//    buttonToTouch = Serial3.parseInt();
+//    //Serial3.print("buttonToTouch: ");Serial3.println(buttonToTouch);
+//  }
+//}
 
 void movementPanel() {
   switch (b) {

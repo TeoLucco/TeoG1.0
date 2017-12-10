@@ -17,24 +17,24 @@ void headCapacitiveLoop() {
   if (pressedButton != -1) {
     lastPressedButtonTime = millis();
     colorByButton = true;
-    //if (interpreterState != game_modality) {
-//      switch (pressedButton) {
-//        case 0: headLedUpdate(red, color_wipe); break;
-//        case 1: headLedUpdate(green, color_wipe); break;
-//        case 2: headLedUpdate(blue, color_wipe); break;
-//        case 3: headLedUpdate(yellow, color_wipe); break;
-//      }
-    //}
-    if (buttonToTouch != -1) {
-      if (pressedButton == buttonToTouch) {
-        rightAnswer();
-        buttonToTouch = -1;
-      } else {
-        wrongAnswer();
+    if (interpreterState != game_modality) {
+      switch (pressedButton) {
+        case 0: headLedUpdate(red, color_wipe); break;
+        case 1: headLedUpdate(green, color_wipe); break;
+        case 2: headLedUpdate(yellow, color_wipe); break;
+        case 3: headLedUpdate(blue, color_wipe); break;
       }
-      if (color_Game)color_Game = false;
-      pressedButton = -1;
     }
+//    if (buttonToTouch != -1) {
+//      if (pressedButton == buttonToTouch) {
+//        rightAnswer();
+//        buttonToTouch = -1;
+//      } else {
+//        wrongAnswer();
+//      }
+//      if (color_Game)color_Game = false;
+//      pressedButton = -1;
+//    }
   }
 }
 
