@@ -8,20 +8,19 @@ double prev_posTh = 0;
 double actual_posTh = 0;
 
 
-#define SCARED_SPD 47.0
-#define HAPPY_SPD 39.0
-#define SAD_SPD 15.0
+
+
 
 void btInterpreter() {
   switch (interpreterState) {
-    case choose_modality: chooseModality();timedSwitchToGameMod(); playAudioTutorial(); break;
+    case choose_modality: chooseModality(); timedSwitchToGameMod(); playAudioTutorial(); break;
     case choose_game:     chooseGame(); break;
     case choose_scenario: chooseScenario(); break;
     case sg_waiting:      sgWaiting(); break;
     case game_modality:   gameMod(); break;
     case fam_modality:    famMod(); break;
     case discharge:       disCharge(); break;
-//    case test_modality:   hardwareTests(); break;
+      //    case test_modality:   hardwareTests(); break;
   }
 }
 
@@ -41,7 +40,7 @@ void chooseModality() {
       case')':
         interpreterState = fam_modality;
         playS(Familiarization_mod_audio);
-        fam_modality_start_time=millis();
+        fam_modality_start_time = millis();
         //CapacitivesUpdate(body);
         movementFinishTime = millis();
         break;
@@ -54,19 +53,19 @@ void chooseModality() {
 
 #define GAME_MODE_SWITCH_TIME 420000
 #define TIME_TO_ANSWER_SWITCH_GAME_MOD 60000
-unsigned long int switchToGameMod_time=0;
+unsigned long int switchToGameMod_time = 0;
 
-boolean switchToGameMod=false;
-void timedSwitchToGameMod(){
-  if(millis()-fam_modality_start_time>GAME_MODE_SWITCH_TIME){
-    fam_modality_start_time=millis();
-    switchToGameMod=true;
+boolean switchToGameMod = false;
+void timedSwitchToGameMod() {
+  if (millis() - fam_modality_start_time > GAME_MODE_SWITCH_TIME) {
+    fam_modality_start_time = millis();
+    switchToGameMod = true;
     playS(MAKEAGAME_AUDIO);//facciamo un gioco?
-    switchToGameMod_time=millis();
+    switchToGameMod_time = millis();
   }
-  if(switchToGameMod && millis()-switchToGameMod_time>TIME_TO_ANSWER_SWITCH_GAME_MOD){
-    switchToGameMod=false;
-    fam_modality_start_time=millis();
+  if (switchToGameMod && millis() - switchToGameMod_time > TIME_TO_ANSWER_SWITCH_GAME_MOD) {
+    switchToGameMod = false;
+    fam_modality_start_time = millis();
   }
 }
 
@@ -79,9 +78,9 @@ void famMod() {
     playAudio();
     headButtonsControl();
     switch (b) {
-      case '.': interpreterState = choose_modality;loopStartTime=millis(); break;
-      case'(': interpreterState = choose_game; playS(game_mod_audio); delay(2000);playS(CHOOSE_GAME_AUDIO);
-        delay(2000);break;
+      case '.': interpreterState = choose_modality; loopStartTime = millis(); break;
+      case'(': interpreterState = choose_game; playS(game_mod_audio); delay(2000); playS(CHOOSE_GAME_AUDIO);
+        delay(2000); break;
 
     }
   }
@@ -129,19 +128,19 @@ void movementPanel() {
 
     case '1':
       //Serial3.println("1-SU");
-      if (front_obstacle!=veryCloseOb && actual_movement != dontwonna) {
+      if (front_obstacle != veryCloseOb && actual_movement != dontwonna) {
         move = true;
         movementFinishTime = millis();
         triskar.run(speed_trg, 0.0);
-      } else if (f_front<=30 && actual_movement != dontwonna)  startMovement(dontwonna, yellowC, color_pulse, DONT_WONNA_AUDIO1 + rand()%3);
+      } else if (f_front <= 30 && actual_movement != dontwonna)  startMovement(dontwonna, yellowC, color_pulse, DONT_WONNA_AUDIO1 + rand() % 3);
       break;
     case '2':
       //Serial3.println("2-GIU'");
-      if (back_obstacle!=veryCloseOb && actual_movement != dontwonna) {
+      if (back_obstacle != veryCloseOb && actual_movement != dontwonna) {
         move = true;
         triskar.run(-speed_trg, 0.0);
         movementFinishTime = millis();
-      } else if (f_back<30 && actual_movement != dontwonna)  startMovement(dontwonna, yellowC, color_pulse, DONT_WONNA_AUDIO1 + rand()%3);
+      } else if (f_back < 30 && actual_movement != dontwonna)  startMovement(dontwonna, yellowC, color_pulse, DONT_WONNA_AUDIO1 + rand() % 3);
       break;
 
     case '3':
@@ -188,24 +187,39 @@ void movementPanel() {
       if (speed_trg > 51)   speed_trg = 51;
       break;
 
-//    case 'f':
-//      triskar.setKi(triskar.getKi() + 0.02);
-//      Serial3.println("*I" + String(triskar.getKi()) + "*");
-//      break;
-//    case 'g':
-//      triskar.setKi(triskar.getKi() - 0.02);
-//      Serial3.println("*I" + String(triskar.getKi()) + "*");
-//      break;
-//    case 'h':
-//      triskar.setKp(triskar.getKp() + 0.02);
-//      Serial3.println("*P" + String(triskar.getKp()) + "*");
-//      break;
-//    case 'i':
-//      triskar.setKi(triskar.getKp() - 0.02);
-//      Serial3.println("*P" + String(triskar.getKp()) + "*");
-//      break;
+      //    case 'f':
+      //      triskar.setKi(triskar.getKi() + 0.02);
+      //      Serial3.println("*I" + String(triskar.getKi()) + "*");
+      //      break;
+      //    case 'g':
+      //      triskar.setKi(triskar.getKi() - 0.02);
+      //      Serial3.println("*I" + String(triskar.getKi()) + "*");
+      //      break;
+      //    case 'h':
+      //      triskar.setKp(triskar.getKp() + 0.02);
+      //      Serial3.println("*P" + String(triskar.getKp()) + "*");
+      //      break;
+      //    case 'i':
+      //      triskar.setKi(triskar.getKp() - 0.02);
+      //      Serial3.println("*P" + String(triskar.getKp()) + "*");
+      //      break;
   }
 }
+
+
+#define SCARED_SPD 47.0
+#define HAPPY_SPD 39.0
+#define SAD_SPD 16.0
+#define ANGRY_SPD 53.0
+#define HAPPY_AUDIO 139
+#define SAD_AUDIO 140
+#define SCARED_AUDIO 142
+#define ANGRY_AUDIO 141
+int happyMovementsList[5] = {make_happy0, make_happy1, make_happy2, make_happy3, make_circle};
+int sadMovementsList[2] = {make_sad0, make_sad1};
+int scaredMovementsList[2] = {scared_hit, scared_behind};
+int angryMovementsList[2] = {scared_round, make_sad2};
+
 
 void settings() {
   switch (b) {
@@ -233,46 +247,32 @@ void settings() {
     case 'c': fotoresistor = false; break;
     case 'd': micro = true; break;
     case 'e': micro = false; break;
-    case 'f': microSoglia=Serial3.parseInt();EEPROM.put(microEEPROMADDR, microSoglia); break;
-    case 'g': FAR_DISTANCE=Serial3.parseInt();EEPROM.put(farDistanceEEPROMADDR, FAR_DISTANCE); break;
-    case 'h': volume=Serial3.parseInt(); myDFPlayer.volume(volume);break;
-    case 'i': bodyLedUpdate(color_pulse, orangeC); speed_trg = SCARED_SPD; break;
-    case 'j': bodyLedUpdate(color_pulse, greenC); speed_trg = HAPPY_SPD; break;
-    case 'k': bodyLedUpdate(color_pulse, blueC); speed_trg = SAD_SPD; break;
-    case 'l': bodyLedUpdate(led_off); speed_trg =35; break;
-   
+    case 'f': microSoglia = Serial3.parseInt(); EEPROM.put(microEEPROMADDR, microSoglia); break;
+    case 'g': FAR_DISTANCE = Serial3.parseInt(); EEPROM.put(farDistanceEEPROMADDR, FAR_DISTANCE); break;
+    case 'h': volume = Serial3.parseInt(); myDFPlayer.volume(volume); break;
+
   }
 }
 
-
-
 void startMovementBT() {
   switch (b) {
-    case '#': stopMovement2();break;
+    case 'i': startMovement(randNumberfromList(scaredMovementsList, sizeof(scaredMovementsList)), orangeC, color_pulse, SCARED_AUDIO); speed_trg = SCARED_SPD; break;
+    case 'j': startMovement(randNumberfromList(happyMovementsList, sizeof(happyMovementsList)), greenC, color_pulse, HAPPY_AUDIO); speed_trg = HAPPY_SPD; break;
+    case 'k': startMovement(randNumberfromList(sadMovementsList, sizeof(sadMovementsList)), blueC, color_pulse, SAD_AUDIO); speed_trg = SAD_SPD; break;
+    case 'm': startMovement(randNumberfromList(angryMovementsList, sizeof(angryMovementsList)), redC, color_pulse, ANGRY_AUDIO); speed_trg = ANGRY_SPD; break;
+    case 'l': bodyLedUpdate(led_off); headLedUpdate(rainbow_cycle); speed_trg = 35; break;
     
-    case '9': startMovement(make_circle); break;
-    case ':': startMovement(scared_round); break;
-    case '<': startMovement(scared_behind); break;
-    case 'C': startMovement(scared_hit); break;
-    case 'D': startMovement(make_sad2); break;
-    
-    case ';': startMovement(dontwonna); break;
-    case 'A': startMovement(make_sad0); break;
-    case 'B': startMovement(make_sad1); break;
-
-    case 'E': startMovement(angrymov); break;
-    
-    case '=': startMovement(make_happy0); break;
-    case '>': startMovement(make_happy1); break;
-    case '?': startMovement(make_happy2); break;
-    case '@': startMovement(make_happy3); break;
-    
+    case '#': stopMovement2(); break;
+    case '9': startMovement(make_circle, greenC, color_pulse); break;
+    case 'D': startMovement(make_sad2, redC, color_pulse); break;
+    case 'I': startMovement(make_dance, rainbow_cycle); break;
+    case 'A': startMovement(make_sad0, blueC, color_pulse); break;
+    case '>': startMovement(make_happy1, greenC, color_pulse); break;
+    case '?': startMovement(make_happy2, greenC, color_pulse); break;
+    case '@': startMovement(make_happy3, greenC, color_pulse); break;
     case 'F': stopMovement(); startMovement(follow); actual_obstacle = none; last_obstacle = none; break;
     case 'G': stopMovement(); startMovement(autonomous_movement); break;
     case 'H': stopMovement(); startMovement(autonomous_capa); break; //START DI MOSCACIECA
-//    case 'I': stopMovement(); startMovement(brokeIce); break;
-//    case 'J': stopMovement(); startMovement(dance_mov); break;
-//    case 'K': stopMovement(); startMovement(colorGame); break;
   }
 }
 
@@ -297,34 +297,34 @@ void sendState() {//send data from arduino to App
   Serial3.println("*g" + String(microSoglia) + "*");
   Serial3.println("*s" + String(FAR_DISTANCE) + "*");
   Serial3.println("*t" + String(volume) + "*");
-//  Serial3.println("*F" + String(fotores_value) + "*");
-//  Serial3.println("*Q" + String(triskar.getSpeedX()) + "*");
-//  Serial3.println("*N" + String(actual_movement) + "*");
-//  Serial3.println("*O" + String(prev_movement) + "*");
-//  Serial3.println("*h" + String(actual_obstacle) + "*");
-//  Serial3.println("*i" + String(last_obstacle) + "*");
-//  Serial3.println("*l" + String(targetPos) + "*");
-//  Serial3.println("*m" + String(right_obstacle) + "*");
-//  Serial3.println("*n" + String(left_obstacle) + "*");
-//  Serial3.println("*o" + String(front_obstacle) + "*");
-//  Serial3.println("*p" + String(previous_distance) + "*");
-//  Serial3.println("*q" + String(actual_distance) + "*");
-//  Serial3.println("*r" + String(touched) + "*");
-//  prev_posX = actual_posX;
-//  actual_posX = triskar.getPosX();
-//  prev_posY = actual_posY;
-//  actual_posY = triskar.getPosY();
-//  prev_posTh = actual_posTh;
-//  actual_posTh = triskar.getPosTh();
-//  if (actual_posX != prev_posX) {
-//    Serial3.println("*X" + String(actual_posX) + "*");
-//  }
-//  if (actual_posY != prev_posY) {
-//    Serial3.println("*Y" + String(actual_posY) + "*");
-//  }
-//  if (actual_posTh != prev_posTh) {
-//    Serial3.println("*T" + String(actual_posTh) + "*");
-//  }
+  //  Serial3.println("*F" + String(fotores_value) + "*");
+  //  Serial3.println("*Q" + String(triskar.getSpeedX()) + "*");
+  //  Serial3.println("*N" + String(actual_movement) + "*");
+  //  Serial3.println("*O" + String(prev_movement) + "*");
+  //  Serial3.println("*h" + String(actual_obstacle) + "*");
+  //  Serial3.println("*i" + String(last_obstacle) + "*");
+  //  Serial3.println("*l" + String(targetPos) + "*");
+  //  Serial3.println("*m" + String(right_obstacle) + "*");
+  //  Serial3.println("*n" + String(left_obstacle) + "*");
+  //  Serial3.println("*o" + String(front_obstacle) + "*");
+  //  Serial3.println("*p" + String(previous_distance) + "*");
+  //  Serial3.println("*q" + String(actual_distance) + "*");
+  //  Serial3.println("*r" + String(touched) + "*");
+  //  prev_posX = actual_posX;
+  //  actual_posX = triskar.getPosX();
+  //  prev_posY = actual_posY;
+  //  actual_posY = triskar.getPosY();
+  //  prev_posTh = actual_posTh;
+  //  actual_posTh = triskar.getPosTh();
+  //  if (actual_posX != prev_posX) {
+  //    Serial3.println("*X" + String(actual_posX) + "*");
+  //  }
+  //  if (actual_posY != prev_posY) {
+  //    Serial3.println("*Y" + String(actual_posY) + "*");
+  //  }
+  //  if (actual_posTh != prev_posTh) {
+  //    Serial3.println("*T" + String(actual_posTh) + "*");
+  //  }
 
 }
 
@@ -339,7 +339,7 @@ void chooseGame() {
         currentGameI = 0;
         playS(you_choosed_game_audio);
         delay(2000);
-        playS(currentGameI+1);
+        playS(currentGameI + 1);
         //        }
         break;
       case '1':
@@ -347,7 +347,7 @@ void chooseGame() {
         currentGameI = 1;
         playS(you_choosed_game_audio);
         delay(2000);
-        playS(currentGameI+1);
+        playS(currentGameI + 1);
         //        }
         break;
 
@@ -356,7 +356,7 @@ void chooseGame() {
         currentGameI = 2;
         playS(you_choosed_game_audio);
         delay(2000);
-        playS(currentGameI+1);
+        playS(currentGameI + 1);
 
         break;
       case '3':
@@ -364,27 +364,27 @@ void chooseGame() {
         currentGameI = 3;
         playS(you_choosed_game_audio);
         delay(2000);
-        playS(currentGameI+1);
+        playS(currentGameI + 1);
 
         break;
-       case '4':
+      case '4':
         interpreterState = choose_scenario;
         currentGameI = 4;
         playS(you_choosed_game_audio);
         delay(2000);
-        playS(currentGameI+1);
+        playS(currentGameI + 1);
 
         break;
       case')':
         interpreterState = fam_modality;
         playS(Familiarization_mod_audio);
-        fam_modality_start_time=millis();
+        fam_modality_start_time = millis();
         //CapacitivesUpdate(body);
         movementFinishTime = millis();
         break;
       case '.':
         interpreterState = choose_modality;
-        loopStartTime=millis();
+        loopStartTime = millis();
         //CapacitivesUpdate(noOne);
         break;
 
@@ -401,52 +401,52 @@ void chooseScenario() {
       case '0':
         interpreterState = sg_waiting;
         currentScenarioI = 0;
-        playS(currentScenarioI+1);
+        playS(currentScenarioI + 1);
         //        }
         break;
       case '1':
         interpreterState = sg_waiting;
         currentScenarioI = 1;
-        playS(currentScenarioI+1);
+        playS(currentScenarioI + 1);
         //        }
         break;
 
       case '2':
         interpreterState = sg_waiting;
         currentScenarioI = 2;
-        playS(currentScenarioI+1);
+        playS(currentScenarioI + 1);
         break;
       case '3':
         interpreterState = sg_waiting;
         currentScenarioI = 3;
-        playS(currentScenarioI+1);
+        playS(currentScenarioI + 1);
         //        }
         break;
       case '4':
         interpreterState = sg_waiting;
         currentScenarioI = 4;
-        playS(currentScenarioI+1);
+        playS(currentScenarioI + 1);
         //        }
         break;
       case '5':
         interpreterState = sg_waiting;
         currentScenarioI = 5;
-        playS(currentScenarioI+1);
+        playS(currentScenarioI + 1);
         //        }
         break;
       case '6':
         interpreterState = sg_waiting;
         currentScenarioI = 6;
-        playS(currentScenarioI+1);
+        playS(currentScenarioI + 1);
         //        }
         break;
       case '7':
         interpreterState = sg_waiting;
         currentScenarioI = 7;
-        playS(currentScenarioI+1);
+        playS(currentScenarioI + 1);
         //        }
         break;
-      case '(': interpreterState = choose_game;playS(game_mod_audio); delay(2000);playS(CHOOSE_GAME_AUDIO); break;
+      case '(': interpreterState = choose_game; playS(game_mod_audio); delay(2000); playS(CHOOSE_GAME_AUDIO); break;
       default:
         // default code (should never run)
         break;
@@ -490,7 +490,7 @@ void gameMod() {
     switch (b) {
       case '.':
         interpreterState = choose_modality;
-        loopStartTime=millis();
+        loopStartTime = millis();
         break;
     }
 

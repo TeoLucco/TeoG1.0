@@ -379,17 +379,11 @@ void loop() {
   }
 }
 
-int happyAudioList[2];
-int happyMovementsList[4]={make_happy0,make_happy1,make_happy2,make_happy3};
-int scaredAudioList[2];
-int scaredMovementList[3];
-int sadAudioList[3];
-int sadMovementList[3];
 
 //randNumberfromList(happyAudioList,sizeof(happyAudioList));
 int randNumberfromList(int list[], int listSize){
-    int randomIndex = rand() % (listSize/sizeof(int));
-     return list[randomIndex];
+  int randomIndex = rand() % (listSize/sizeof(int));
+  return list[randomIndex];
 }
 
 void pidLoop() {

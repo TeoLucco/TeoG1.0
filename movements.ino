@@ -1,9 +1,9 @@
-#define ANGRY_FORWARD_SP 38.0f
-#define HAPPY_FORWARD_SP 34.0f
+#define ANGRY_FORWARD_SP 53.0f
+#define HAPPY_FORWARD_SP 39.0f
 #define SCARED_FORWARD_SP 47.0f
-#define SAD_FORWARD_SP  17.0f //13
+#define SAD_FORWARD_SP  16.0f //13
 
-#define ANGRY_ANGULAR_SP 3.5f
+#define ANGRY_ANGULAR_SP 2.0f
 #define HAPPY_ANGULAR_SP 1.5f
 #define SCARED_ANGULAR_SP 1.0f
 #define SAD_ANGULAR_SP  1.0f  //0.6
@@ -287,11 +287,13 @@ void startMovement(byte movement, ledStates ledState, byte audio) {
   startMovementBase(movement);
   playS(audio);
   if (body_leds) bodyLedUpdate(ledState);
+  if (head_leds) headLedUpdate(ledState);
 }
 
 void startMovement(byte movement, colors color, ledStates ledState) {
   startMovementBase(movement);
   if (body_leds) bodyLedUpdate(ledState, color);
+  if (head_leds) headLedUpdate(chooseColor(color), ledState);
 }
 void startMovement(byte movement, colors color) {
   startMovementBase(movement);
@@ -338,8 +340,10 @@ void stopMovement() {
   prev_movement = actual_movement;
   actual_movement = no_movement;
   move = false;
+  if(interpreterState==game_modality || prev_movement==make_dance){
   bodyLedUpdate(led_off);
   headLedUpdate(rainbow_cycle);
+  }
   //stopS();
   movementFinishTime = millis();
   if (gameState == mov) {
@@ -413,7 +417,7 @@ void obstacle_stop_movement() {
 #define ANGULAR_SP FORWARD_SP/RADIO2
 
 void make_Circle() {
-  rotateRobot(- 2.0 * PI , -ANGULAR_SP, FORWARD_SP, 0);
+  rotateRobot(- 2.0 * PI , -ANGULAR_SP, HAPPY_FORWARD_SP, 0);
   stopMovement(1);
 }
 
@@ -563,16 +567,16 @@ void makeAnEight2() {
 
 
 void makeRunScaredBehind() {
-  scaredRunBasicBR(0);
+  scaredRunBasicBR(0,SCARED_FORWARD_SP);
   stopMovement(5);
 }
 
-void makeRunScaredForward(int i) {
-  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, SCARED_FORWARD_SP, i);
-  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, SCARED_FORWARD_SP, i + 1);
-  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, SCARED_FORWARD_SP, i + 2);
-  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, SCARED_FORWARD_SP, i + 3);
-  rotateRobot(0.0 , SCARED_ANGULAR_SP, SCARED_FORWARD_SP, i + 4);
+void makeRunScaredForward(int i, float forwardSpeed) {
+  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, forwardSpeed, i);
+  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, forwardSpeed, i + 1);
+  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, forwardSpeed, i + 2);
+  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, forwardSpeed, i + 3);
+  rotateRobot(0.0 , SCARED_ANGULAR_SP, forwardSpeed, i + 4);
 }
 boolean flag = true;
 void makeRunScaredHit() { //at the end of the scared movement the robot will go in the opposite direction in line way like makeonemF
@@ -608,20 +612,20 @@ void makeRunScaredHitR() { //at the end of the scared movement the robot will go
   stopMovement(7);
 }
 
-void scaredRunBasicBR(int i) {
-  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i);
-  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i + 1);
-  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i + 2);
-  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i + 3);
-  rotateRobot( 0.0 ,  -SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i + 4);
+void scaredRunBasicBR(int i, float forwardSpeed) {
+  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, -forwardSpeed, i);
+  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, -forwardSpeed, i + 1);
+  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, -forwardSpeed, i + 2);
+  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, -forwardSpeed, i + 3);
+  rotateRobot( 0.0 ,  -SCARED_ANGULAR_SP, -forwardSpeed, i + 4);
 }
 
-void scaredRunBasicBL(int i) {
-  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i);
-  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i + 1);
-  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i + 2);
-  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i + 3);
-  rotateRobot( 0.0 ,  SCARED_ANGULAR_SP, -SCARED_FORWARD_SP, i + 4);
+void scaredRunBasicBL(int i, float forwardSpeed) {
+  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, -forwardSpeed, i);
+  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, -forwardSpeed, i + 1);
+  rotateRobot(+ PI / 24.0 , SCARED_ANGULAR_SP, -forwardSpeed, i + 2);
+  rotateRobot(- PI / 24.0 , -SCARED_ANGULAR_SP, -forwardSpeed, i + 3);
+  rotateRobot( 0.0 ,  SCARED_ANGULAR_SP, -forwardSpeed, i + 4);
 }
 
 
@@ -684,9 +688,9 @@ void makeHappy2() {
 }
 
 void makeHappy3() {
-  scaredRunBasicBR(0);
+  scaredRunBasicBR(0,HAPPY_FORWARD_SP);
   stopRobot(5);
-  makeRunScaredForward(6);
+  makeRunScaredForward(6,HAPPY_FORWARD_SP);
   stopMovement(11);
 
 }
@@ -700,11 +704,10 @@ void makeSad0() {
 
 
 void makeSad1() {
-
-  rotateRobot( PI / 40.0, SAD_ANGULAR_SP, 0.0f, 0);
-  rotateRobot( - PI / 40.0, -SAD_ANGULAR_SP, 0.0f, 1);
-  rotateRobot( PI / 40.0, SAD_ANGULAR_SP, 0.0f, 2);
-  rotateRobot( - PI / 40.0, -SAD_ANGULAR_SP, 0.0f, 3);
+  rotateRobot( PI / 75.0,  SAD_ANGULAR_SP, 0.0f, 0);
+  rotateRobot(- PI / 75.0,  - SAD_ANGULAR_SP, 0.0f, 1);
+  rotateRobot( PI / 75.0,  SAD_ANGULAR_SP, 0.0f, 2);
+  rotateRobot(- PI / 75.0,  - SAD_ANGULAR_SP, 0.0f, 3);
   rotateRobot( 0.0f, SAD_ANGULAR_SP, 0.0f, 4);
   stopMovement(5);
 }
@@ -713,39 +716,39 @@ void makeSad1() {
 
 void makeSad2() {
   traslateRobot(-100.f, -SCARED_FORWARD_SP, 0.0f, 0);
-  rotateRobot( PI / 40.0, SAD_ANGULAR_SP, 0.0f, 1);
-  rotateRobot(- PI / 40.0, -SAD_ANGULAR_SP, 0.0f, 2);
-  rotateRobot( PI / 40.0, SAD_ANGULAR_SP, 0.0f, 3);
-  rotateRobot(- PI / 40.0, -SAD_ANGULAR_SP, 0.0f, 4);
-  rotateRobot( PI / 40.0, SAD_ANGULAR_SP, 0.0f, 5);
+  rotateRobot( PI / 40.0, SCARED_ANGULAR_SP, 0.0f, 1);
+  rotateRobot(- PI / 40.0, -SCARED_ANGULAR_SP, 0.0f, 2);
+  rotateRobot( PI / 40.0, SCARED_ANGULAR_SP, 0.0f, 3);
+  rotateRobot(- PI / 40.0, -SCARED_ANGULAR_SP, 0.0f, 4);
+  rotateRobot( PI / 40.0, SCARED_ANGULAR_SP, 0.0f, 5);
   stopRobot(6);
-  traslateRobot(-200.0, SAD_FORWARD_SP, 0.0f, 7);
+  traslateRobot(-200.0, SCARED_FORWARD_SP, 0.0f, 7);
   stopMovement(8);
 }
 
 void makeSad2L() {
   traslateRobot(100.f, SCARED_FORWARD_SP, -0.5, 0);
-  rotateRobot( alpha, SAD_ANGULAR_SP, 0.0f, 1);
-  rotateRobot(alpha - PI / 40.0, -SAD_ANGULAR_SP, 0.0f, 2);
-  rotateRobot(alpha + PI / 40.0, SAD_ANGULAR_SP, 0.0f, 3);
-  rotateRobot(alpha - PI / 40.0, -SAD_ANGULAR_SP, 0.0f, 4);
-  rotateRobot(alpha + PI / 40.0, SAD_ANGULAR_SP, 0.0f, 5);
-  rotateRobot(0.0, -SAD_ANGULAR_SP, 0.0f, 6);
+  rotateRobot( alpha, SCARED_ANGULAR_SP, 0.0f, 1);
+  rotateRobot(alpha - PI / 40.0, -SCARED_ANGULAR_SP, 0.0f, 2);
+  rotateRobot(alpha + PI / 40.0, SCARED_ANGULAR_SP, 0.0f, 3);
+  rotateRobot(alpha - PI / 40.0, -SCARED_ANGULAR_SP, 0.0f, 4);
+  rotateRobot(alpha + PI / 40.0, SCARED_ANGULAR_SP, 0.0f, 5);
+  rotateRobot(0.0, -SCARED_ANGULAR_SP, 0.0f, 6);
   stopRobot(7);
-  traslateRobot(200.0, SAD_FORWARD_SP, 0.0f, 8);
+  traslateRobot(200.0, SCARED_FORWARD_SP, 0.0f, 8);
   stopMovement(9);
 }
 
 void makeSad2R() {
   traslateRobot(100.f, SCARED_FORWARD_SP, 0.5, 0);
-  rotateRobot(-alpha, -SAD_ANGULAR_SP, 0.0f, 1);
-  rotateRobot(alpha + PI / 40.0, SAD_ANGULAR_SP, 0.0f, 2);
-  rotateRobot(alpha - PI / 40.0, -SAD_ANGULAR_SP, 0.0f, 3);
-  rotateRobot(alpha + PI / 40.0, SAD_ANGULAR_SP, 0.0f, 4);
-  rotateRobot(alpha - PI / 40.0, -SAD_ANGULAR_SP, 0.0f, 5);
-  rotateRobot(0.0, SAD_ANGULAR_SP, 0.0f, 6);
+  rotateRobot(-alpha, -SCARED_ANGULAR_SP, 0.0f, 1);
+  rotateRobot(alpha + PI / 40.0, SCARED_ANGULAR_SP, 0.0f, 2);
+  rotateRobot(alpha - PI / 40.0, -SCARED_ANGULAR_SP, 0.0f, 3);
+  rotateRobot(alpha + PI / 40.0, SCARED_ANGULAR_SP, 0.0f, 4);
+  rotateRobot(alpha - PI / 40.0, -SCARED_ANGULAR_SP, 0.0f, 5);
+  rotateRobot(0.0, SCARED_ANGULAR_SP, 0.0f, 6);
   stopRobot(7);
-  traslateRobot(200.0, SAD_FORWARD_SP, 0.0f, 8);
+  traslateRobot(200.0, SCARED_FORWARD_SP, 0.0f, 8);
   stopMovement(9);
 }
 
@@ -764,7 +767,7 @@ float obstacleSeenPosTh = 0;
 void makeScaredRound() {
   if (dir == 1) {
     if ((triskar.getPosTh() < 2 * PI && front_obstacle != veryCloseOb) && movementI == 0)
-      triskar.run(0.0f, -1.7);
+      triskar.run(0.0f, -2.0);
     else if (movementI == 0) {
       movementI = 1;
       obstacleSeenPosTh = triskar.getPosTh();
